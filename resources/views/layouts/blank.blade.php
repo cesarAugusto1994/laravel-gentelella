@@ -18,6 +18,9 @@
         <!-- Custom Theme Style -->
         <link href="{{ asset("css/gentelella.min.css") }}" rel="stylesheet">
 
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css"/>
+    
+
         @stack('stylesheets')
 
     </head>
@@ -43,6 +46,9 @@
         <script src="{{ asset("js/bootstrap.min.js") }}"></script>
         <!-- Custom Theme Scripts -->
         <script src="{{ asset("js/gentelella.min.js") }}"></script>
+
+        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 
         @stack('scripts')
 

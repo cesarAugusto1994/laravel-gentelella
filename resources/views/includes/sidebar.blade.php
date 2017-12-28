@@ -1,7 +1,7 @@
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
-            <a href="{{ url('/') }}" class="site_title"><i class="fa fa-paw"></i> <span>Gentellela Alela!</span></a>
+            <a href="{{ url('/') }}" class="site_title"><i class="fa fa-home"></i> <span>Controle Ativos</span></a>
         </div>
         
         <div class="clearfix"></div>
@@ -12,7 +12,7 @@
                 <img src="{{ Gravatar::src(Auth::user()->email) }}" alt="Avatar of {{ Auth::user()->name }}" class="img-circle profile_img">
             </div>
             <div class="profile_info">
-                <span>Welcome,</span>
+                <span>Bem Vindo,</span>
                 <h2>{{ Auth::user()->name }}</h2>
             </div>
         </div>
@@ -23,50 +23,43 @@
         <!-- sidebar menu -->
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
             <div class="menu_section">
-                <h3>Group 1</h3>
+                <h3>Painel</h3>
                 <ul class="nav side-menu">
-                    <li><a><i class="fa fa-home"></i> Multiple link <span class="fa fa-chevron-down"></span></a>
+                    <li><a><i class="fa fa-laptop"></i> Equipamentos <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="#">Link 1</a></li>
-                            <li><a href="#">Link 2</a></li>
-                            <li><a href="#">Link 3</a></li>
+                            <li><a href="{{route('equipments')}}">Lista</a></li>
+                            <li><a href="#">Estoque</a></li>
+                            <li><a href="#">LOGS</a></li>
+                        </ul>
+                    </li>
+                    <li><a><i class="fa fa-laptop"></i> Gerencial <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{{route('brands')}}">Marcas</a></li>
+                            <li><a href="{{route('statuses')}}">Situações</a></li>
+                            <li><a href="#">Usuários</a></li>
+                        </ul>
+                    </li>
+                    <li><a><i class="fa fa-laptop"></i> Cadastros <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{{route('equipments_create')}}">Equipamentos</a></li>
+                            <li><a href="{{route('brands_create')}}">Marcas</a></li>
+                            <li><a href="{{route('status_create')}}">Situações</a></li>
+                            <li><a href="#">Usuários</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="javascript:void(0)">
-                            <i class="fa fa-laptop"></i>
-                            One link
+                            <i class="fa fa-calendar"></i>
+                            Agendamentos
                             <span class="label label-success pull-right">Flag</span>
                         </a>
                     </li>
-                </ul>
-            </div>
-            <div class="menu_section">
-                <h3>Group 2</h3>
-                <ul class="nav side-menu">
                     <li>
-                        <a><i class="fa fa-sitemap"></i> Multilevel Menu <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li>
-                                <a href="#">Level One</a>
-                                <li>
-                                    <a>Level One<span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li class="sub_menu">
-                                            <a href="#">Level Two</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Level Two</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Level Two</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            <li>
-                                <a href="#">Level One</a>
-                            </li>
-                        </ul>
+                        <a href="javascript:void(0)">
+                            <i class="fa fa-file-pdf-o"></i>
+                            Relatorios
+                            <span class="label label-success pull-right">Flag</span>
+                        </a>
                     </li>
                 </ul>
             </div>
