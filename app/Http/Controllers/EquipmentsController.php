@@ -7,6 +7,7 @@ use App\Equipment;
 use App\Brand;
 use Illuminate\Support\Facades\Validator;
 use App\Status;
+use Request as Req;
 
 class EquipmentsController extends Controller
 {

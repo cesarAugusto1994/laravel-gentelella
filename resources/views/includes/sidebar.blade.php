@@ -27,7 +27,20 @@
                 <ul class="nav side-menu">
                     <li><a><i class="fa fa-laptop"></i> Equipamentos <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{{route('equipments')}}">Lista</a></li>
+                            <li>
+                                <a>Listagem<span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li class="sub_menu">
+                                        <a href="{{route('equipments')}}">Por Produto</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('equipments', ['brand' => 'brand'])}}">Marca</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Modelo</a>
+                                    </li>
+                                </ul>
+                            </li>
                             <li><a href="#">Estoque</a></li>
                             <li><a href="#">LOGS</a></li>
                         </ul>
@@ -60,6 +73,37 @@
                             Relatorios
                             <span class="label label-success pull-right">Flag</span>
                         </a>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="menu_section">
+                <h3>Group 2</h3>
+                <ul class="nav side-menu">
+                    <li>
+                        <a><i class="fa fa-sitemap"></i> Multilevel Menu <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li>
+                                <a href="#">Level One</a>
+                                <li>
+                                    <a>Level One<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li class="sub_menu">
+                                            <a href="#">Level Two</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Level Two</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Level Two</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            <li>
+                                <a href="#">Level One</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
