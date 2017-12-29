@@ -21,6 +21,10 @@ Route::get('/statuses', 'StatusController@index')->name('statuses');
 
 Route::get('/calls', 'CallsController@index')->name('calls');
 Route::get('/calls/create', 'CallsController@create')->name('calls_create');
+Route::post('/calls/store', 'CallsController@store')->name('calls_store');
+
+Route::get('/call/{call}/equipments/create', 'CallEquipmentsController@create')->name('call_equipments_create');
+
 
 Route::prefix('admin')->group(function () {
     
@@ -37,4 +41,9 @@ Route::prefix('admin')->group(function () {
     Route::get('/users/create', 'UsersController@create')->name('users_create');
     Route::post('/users/store', 'UsersController@store')->name('users_store');
 
+    Route::get('/call/subjects', 'CallSubjectsController@index')->name('subjects');
+    Route::get('/call/subjects/create', 'CallSubjectsController@create')->name('subjects_create');
+    Route::post('/call/subjects/store', 'CallSubjectsController@store')->name('subjects_store');
+
+    
 });

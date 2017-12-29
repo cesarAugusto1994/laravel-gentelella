@@ -3,22 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Call;
-use App\CallEquipments;
+use App\CallSubjects;
+use Illuminate\Support\Facades\Validator;
 
-class CallEquipmentsController extends Controller
+class CallSubjectsController extends Controller
 {
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +15,7 @@ class CallEquipmentsController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.calls.subjects.index')->with('subjects', CallSubjects::all());
     }
 
     /**
@@ -34,11 +23,9 @@ class CallEquipmentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($call)
+    public function create()
     {
-        return view('admin.calls.equipments.create')
-        ->with('call', Call::find($call))
-        ->with('equipments', CallEquipments::where('call_id', $call)->get());
+        return view('admin.calls.subjects.create');
     }
 
     /**
@@ -49,7 +36,23 @@ class CallEquipmentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->request->all();
+        
+        $validator = Validator::make($data, [
+            'subject' => 'required|min:2|max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $subject = new CallSubjects();
+        $subject->subject = $data['subject'];
+        $subject->Save();
+
+        return redirect()->route('subjects')->with('message', 'Novo assunto adicionado com sucesso.');
     }
 
     /**

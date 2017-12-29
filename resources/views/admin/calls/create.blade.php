@@ -37,14 +37,34 @@
                 </div>
                 <div class="x_content">
                   <br>
-                  <form method="post" action="{{route('status_store')}}" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+                  <form method="post" action="{{route('calls_store')}}" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
                       {{csrf_field()}}
-                    <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nome <span class="required">*</span>
-                      </label>
+
+                    <div class="form-group {!! $errors->has('subject') ? 'has-error' : '' !!}">
+                      <label for="subject" class="control-label col-md-3 col-sm-3 col-xs-12">Assunto </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="name" name="name" required="required" class="form-control col-md-7 col-xs-12">
-                        {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
+                        <select class="form-control col-md-7 col-xs-12" name="subject" required>
+                            <option value="">Selecione um Assunto</option>
+                            @foreach($subjects as $subject)
+                              <option value="{{$subject->id}}">{{$subject->subject}}</option>
+                            @endforeach
+                          </select>
+                        {!! $errors->first('subject', '<p class="help-block">:message</p>') !!}
+                      </div>
+                    </div>
+
+                    <div class="form-group {!! $errors->has('date') ? 'has-error' : '' !!}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Para o dia </label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input id="date" class="form-control col-md-7 col-xs-12" type="text" name="date">
+                        {!! $errors->first('date', '<p class="help-block">:message</p>') !!}
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Solicitante </label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input readonly disabled value="{{Auth::user()->name}}" class="form-control col-md-7 col-xs-12" type="text">
                       </div>
                     </div>
 
@@ -52,7 +72,7 @@
                     <div class="form-group">
                       <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                         <button class="btn btn-primary" type="button">Cancelar</button>
-                        <button type="submit" class="btn btn-success">Salvar</button>
+                        <button type="submit" class="btn btn-success">Adicionar Equipamentos</button>
                       </div>
                     </div>
 

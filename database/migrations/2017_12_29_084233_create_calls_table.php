@@ -13,9 +13,19 @@ class CreateCallsTable extends Migration
      */
     public function up()
     {
+
+        Schema::create('call_subjects', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('subject');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
         Schema::create('calls', function (Blueprint $table) {
             
             $table->increments('id');
+
+            $table->integer('subject_id');
 
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
@@ -23,11 +33,12 @@ class CreateCallsTable extends Migration
             $table->integer('approver_id')->unsigned()->nullable();
             $table->foreign('approver_id')->references('id')->on('users');
 
+            $table->date('date');            
+
             $table->string('status');
 
             $table->timestamps();
             $table->softDeletes();
-
         });
     }
 
@@ -38,6 +49,7 @@ class CreateCallsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('call_subjects');
         Schema::dropIfExists('calls');
     }
 }

@@ -4,9 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Call;
+use App\CallSubjects;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class CallsController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +40,7 @@ class CallsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.calls.create')->with('subjects', CallSubjects::all());
     }
 
     /**
@@ -37,7 +51,27 @@ class CallsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->request->all();
+        
+        $validator = Validator::make($data, [
+            'subject' => 'required',
+            'date' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $call = new Call();
+        $call->subject_id = $data['subject'];
+        $call->date = \DateTime::createFromFormat('d/m/Y', $data['date']);
+        $call->user_id = Auth::user()->id;
+        $call->status = 'ABERTO';
+        $call->save();
+
+        return redirect()->route('call_equipments_create', ['call' => $call->id]);
     }
 
     /**

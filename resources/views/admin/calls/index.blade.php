@@ -45,13 +45,35 @@
                   <table id="datatable-buttons" class="table table-striped table-bordered dataTable no-footer dtr-inline">
 
                     <thead>
-                      <th>Nome</th>
+                      <th></th>
+                      <th>Assunto</th>
+                      <th>Usuário</th>
+                      <th>Data</th>
+                      <th>Situação</th>
                     </thead>
 
                     <tbody>
                       @foreach($calls as $call)
                           <tr>
-                            <td>{{$call->id}}</td>
+                              <td>
+                                  <div class="input-group-btn">
+                                    <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                        <li><a href="{{route('call_equipments_create', ['call' => $call->id])}}">Editar</a>
+                                        </li>
+                                        <li><a href="#">Logs</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Inativar</a>
+                                        </li>
+                                      </ul>
+                                  </div>
+                              </td>
+                            <td>{{$call->subject_id}}</td>
+                            <td>{{$call->user_id}}</td>
+                            <td>{{$call->date}}</td>
+                            <td>{{$call->status}}</td>
                           </tr>
                       @endforeach
                     </tbody>
