@@ -52,6 +52,12 @@
                         </li>
                     @endif
                     <li>
+                        <a href="{{route('calls')}}">
+                            <i class="fa fa-calendar"></i>
+                            Chamados
+                        </a>
+                    </li>
+                    <li>
                         <a href="javascript:void(0)">
                             <i class="fa fa-calendar"></i>
                             Agendamentos

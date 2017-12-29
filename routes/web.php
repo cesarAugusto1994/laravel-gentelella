@@ -19,6 +19,8 @@ Route::get('/equipments', 'EquipmentsController@index')->name('equipments');
 Route::get('/brands', 'BrandsController@index')->name('brands');
 Route::get('/statuses', 'StatusController@index')->name('statuses');
 
+Route::get('/calls', 'CallsController@index')->name('calls');
+Route::get('/calls/create', 'CallsController@create')->name('calls_create');
 
 Route::prefix('admin')->group(function () {
     
