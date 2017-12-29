@@ -12,7 +12,7 @@
 
         <div class="page-title">
             <div class="title_left">
-              <h3>Marcas</h3>
+              <h3>Usuarios</h3>
             </div>
 
             <div class="title_right">
@@ -32,26 +32,30 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2>Marcas 
+                  <h2>Usuarios 
                     </h2>
-                    @if(Auth::user()->isAdmin())
-                      <a href="{{route('brands_create')}}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-plus"> </i>&nbsp;Nova Marca</a>
-                    @endif
-                    <div class="clearfix"></div>
+                      @if(Auth::user()->isAdmin())
+                        <a href="{{route('users_create')}}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-plus"> </i>&nbsp;Novo Usuario</a>
+                      @endif
+                      <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
 
 
-                  <table class="table table-responsive table-striped">
+                  <table id="datatable-buttons" class="table table-striped table-bordered dataTable no-footer dtr-inline">
 
                     <thead>
                       <th>Nome</th>
+                      <th>E-mail</th>
+                      <th>Acesso</th>
                     </thead>
 
                     <tbody>
-                      @foreach($brands as $brand)
+                      @foreach($users as $user)
                           <tr>
-                            <td>{{$brand->name}}</td>
+                            <td>{{$user->name}}</td>
+                            <td>{{$user->email}}</td>
+                            <td>{{$user->roles->first()['description']}}</td>
                           </tr>
                       @endforeach
                     </tbody>
@@ -66,3 +70,14 @@
     </div>
     <!-- /page content -->
 @endsection
+
+@push('scripts')
+
+    <script>
+
+        $(document).ready(function(){
+          $('#datatable-buttons').DataTable();
+      });
+
+    </script>
+@endpush

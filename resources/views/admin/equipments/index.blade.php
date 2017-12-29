@@ -34,8 +34,10 @@
                 <div class="x_title">
                   <h2>Equipamentos 
                     </h2>
-                    <a href="{{route('equipments_create')}}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-plus"> </i>&nbsp;Novo Equipamento</a>
-                  <div class="clearfix"></div>
+                    @if(Auth::user()->isAdmin())
+                      <a href="{{route('equipments_create')}}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-plus"> </i>&nbsp;Novo Equipamento</a>
+                    @endif
+                    <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
 
@@ -84,7 +86,7 @@
                           </tr>
                       @empty
                           <tr>
-                              <td>Sem Equipamento</td>
+                              <td colspan="8"><p class="lead">Sem Equipamento</p></td>
                             </tr>
                       @endforelse
                     </tbody>

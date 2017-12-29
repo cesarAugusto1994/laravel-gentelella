@@ -28,18 +28,7 @@
                     <li><a><i class="fa fa-laptop"></i> Equipamentos <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li>
-                                <a>Listagem<span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    <li class="sub_menu">
-                                        <a href="{{route('equipments')}}">Por Produto</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{route('equipments', ['brand' => 'brand'])}}">Marca</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Modelo</a>
-                                    </li>
-                                </ul>
+                                <a href="{{route('equipments')}}">Listagem</a>
                             </li>
                             <li><a href="#">Estoque</a></li>
                             <li><a href="#">LOGS</a></li>
@@ -49,17 +38,19 @@
                         <ul class="nav child_menu">
                             <li><a href="{{route('brands')}}">Marcas</a></li>
                             <li><a href="{{route('statuses')}}">Situações</a></li>
-                            <li><a href="#">Usuários</a></li>
+                            <li><a href="{{route('users')}}">Usuários</a></li>
                         </ul>
                     </li>
-                    <li><a><i class="fa fa-laptop"></i> Cadastros <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="{{route('equipments_create')}}">Equipamentos</a></li>
-                            <li><a href="{{route('brands_create')}}">Marcas</a></li>
-                            <li><a href="{{route('status_create')}}">Situações</a></li>
-                            <li><a href="#">Usuários</a></li>
-                        </ul>
-                    </li>
+                    @if(Auth::user()->isAdmin())
+                        <li><a><i class="fa fa-laptop"></i> Cadastros <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="{{route('equipments_create')}}">Equipamentos</a></li>
+                                <li><a href="{{route('brands_create')}}">Marcas</a></li>
+                                <li><a href="{{route('status_create')}}">Situações</a></li>
+                                <li><a href="{{route('users_create')}}">Usuários</a></li>
+                            </ul>
+                        </li>
+                    @endif
                     <li>
                         <a href="javascript:void(0)">
                             <i class="fa fa-calendar"></i>
@@ -73,37 +64,6 @@
                             Relatorios
                             <span class="label label-success pull-right">Flag</span>
                         </a>
-                    </li>
-                </ul>
-            </div>
-
-
-            <div class="menu_section">
-                <h3>Group 2</h3>
-                <ul class="nav side-menu">
-                    <li>
-                        <a><i class="fa fa-sitemap"></i> Multilevel Menu <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li>
-                                <a href="#">Level One</a>
-                                <li>
-                                    <a>Level One<span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li class="sub_menu">
-                                            <a href="#">Level Two</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Level Two</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Level Two</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            <li>
-                                <a href="#">Level One</a>
-                            </li>
-                        </ul>
                     </li>
                 </ul>
             </div>

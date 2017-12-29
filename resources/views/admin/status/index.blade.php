@@ -34,8 +34,10 @@
                 <div class="x_title">
                   <h2>Status 
                     </h2>
-                    <a href="{{route('status_create')}}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-plus"> </i>&nbsp;Novo Status</a>
-                  <div class="clearfix"></div>
+                    @if(Auth::user()->isAdmin())
+                      <a href="{{route('status_create')}}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-plus"> </i>&nbsp;Novo Status</a>
+                    @endif
+                      <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
 

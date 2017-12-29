@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Brand;
+use App\Models\User;
+use Illuminate\Validation\Validator;
+use App\Role;
 
-class BrandsController extends Controller
+class UsersController extends Controller
 {
 
         /**
@@ -17,7 +19,7 @@ class BrandsController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +27,7 @@ class BrandsController extends Controller
      */
     public function index()
     {
-        return view('admin.brands.index')->with('brands', Brand::all());  
+        return view('admin.users.index')->with('users', User::all());        
     }
 
     /**
@@ -35,7 +37,7 @@ class BrandsController extends Controller
      */
     public function create()
     {
-        return view('admin.brands.create');  
+        return view('admin.users.create');        
     }
 
     /**
@@ -46,17 +48,32 @@ class BrandsController extends Controller
      */
     public function store(Request $request)
     {
-        $name = $request->request->get('name');
+        $data = $request->request->all();
 
-        $someName = Brand::where('name', $name)->get();
+        $validator = \Illuminate\Support\Facades\Validator::make($data, [
+			'name' => 'required|max:255',
+			'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
+            'roles' => 'required',
+        ]);
 
-        if (count($someName) > 0) {
-            return back()->withInput();
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
         }
 
-        Brand::create($request->request->all());
+        $roleUser = Role::where("name", $data['roles'])->first();
         
-        return redirect()->route('brands');
+        $manager = new User();
+        $manager->name = $data['name'];
+        $manager->email = $data['email'];
+        $manager->password = bcrypt($data['password']);
+        $manager->save();
+        $manager->roles()->attach($roleUser);
+
+        return redirect()
+        ->route('users')
+        ->with('message', 'Novo Equipamento adicionado com sucesso.');        
+        
     }
 
     /**
