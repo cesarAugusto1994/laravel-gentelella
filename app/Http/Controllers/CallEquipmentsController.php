@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Call;
 use App\CallEquipments;
+use Request as Req;
+use App\Equipment;
 
 class CallEquipmentsController extends Controller
 {
@@ -36,9 +38,53 @@ class CallEquipmentsController extends Controller
      */
     public function create($call)
     {
+        $equipments = CallEquipments::where('call_id', $call)->get();
+
+        if (Req::has('remove-equipment')) {
+            
+            $callEquip = CallEquipments::find(Req::input('remove-equipment'));
+            
+            $equip = Equipment::find($callEquip->equipment_id);
+            
+            $callEquip->destroy($callEquip->equipment_id);
+
+            $equip->status_id = Equipment::STATUS_DISPONIVEL; #Agendado
+            
+            $equip->save();
+        }
+
         return view('admin.calls.equipments.create')
         ->with('call', Call::find($call))
-        ->with('equipments', CallEquipments::where('call_id', $call)->get());
+        ->with('equipments', $equipments);
+    }
+
+    public function add($call)
+    {
+        $result = $filter = [];
+
+        if (Req::has('add-equipment')) {
+            
+            $equip = Equipment::find(Req::input('add-equipment'));
+
+            $callEquip = new CallEquipments();
+            $callEquip->call_id = $call;
+            $callEquip->equipment_id = $equip->id;
+            $callEquip->status = 'ADICIONADO';
+            $callEquip->save();
+
+            $equip->status_id = Equipment::STATUS_AGENDADO; #Agendado
+            $equip->save();
+        }
+
+        if (Req::has('filter')) {
+            $equipaments = Equipment::where('name', 'like', '%' . Req::input('filter') . '%');            
+            $result = $equipaments->where('status_id', Equipment::STATUS_DISPONIVEL)->get();
+        }
+
+        return view('admin.calls.equipments.add')
+        ->with('call', Call::find($call))
+        ->with('equipments', $result)
+        ->with('filter', Req::input('filter'));
     }
 
     /**

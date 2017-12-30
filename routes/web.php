@@ -15,6 +15,10 @@ Auth::routes();
 Route::get('/logout', 'Auth\LoginController@logout');
 Route::get('/', 'HomeController@index');
 
+Route::get('/equipments/ajax/{filter}', 'EquipmentsController@filterFromAjax')->name('find_equipments_ajax');
+
+Route::get('/call/{call}/equipments/add', 'CallEquipmentsController@add')->name('equipments_add');
+
 Route::get('/equipments', 'EquipmentsController@index')->name('equipments');
 Route::get('/brands', 'BrandsController@index')->name('brands');
 Route::get('/statuses', 'StatusController@index')->name('statuses');

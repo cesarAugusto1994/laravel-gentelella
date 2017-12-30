@@ -86,6 +86,13 @@ class EquipmentsController extends Controller
         return redirect()->route('equipments')->with('message', 'Novo Equipamento adicionado com sucesso.');
     }
 
+    public function filterFromAjax(string $filter)
+    {
+        $result = Equipment::where('name', 'like', '%'. $filter . '%')->groupBy('name', 'brand_id', 'model', 'serial');
+
+        return $result->get()->toJson();
+    }
+
     /**
      * Display the specified resource.
      *

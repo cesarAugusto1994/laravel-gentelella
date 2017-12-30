@@ -8,6 +8,13 @@ use App\Status;
 
 class Equipment extends Model
 {
+    const STATUS_DISPONIVEL = 1;
+    const STATUS_AGENDADO = 2;
+    const STATUS_RESERVADO = 3;
+    const STATUS_EM_USO = 4;
+    const STATUS_TRIAGEM = 5;
+    const STATUS_QUEBRADO = 6;
+    
     protected $table = 'equipments';
 
     protected $fillable = [
@@ -19,16 +26,6 @@ class Equipment extends Model
         "date",
         "status_id",
     ];
-
-    	/**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
-	public function __construct()
-	{
-		//$this->middleware('guest', ['except' => 'logout']);
-    }
     
     public function brand()
     {

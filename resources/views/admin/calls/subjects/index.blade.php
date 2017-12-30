@@ -36,7 +36,6 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-
 					<table id="datatable-buttons" class="table table-striped table-bordered dataTable no-footer dtr-inline">
 						<thead>
 							<th>Assunto</th>
@@ -65,5 +64,6 @@
 	$(document).ready(function(){
           $('#datatable-buttons').DataTable();
       });
+
 </script>
 @endpush
