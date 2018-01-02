@@ -52,7 +52,7 @@
 									@forelse($equipments as $equipment)
 									<tr>
 										<td>
-											<a href="?remove-equipment={{$equipment->equipment_id}}" class="btn btn-success btn-xs btn-default">Adicionar</a>
+											<a href="?remove-equipment={{$equipment->id}}" class="btn btn-danger btn-xs btn-default">Remover</a>
 										</td>
 										<td>{{$equipment->equipment_id}}</td>
 										<td>@{{$equipment->brand->name}}</td>

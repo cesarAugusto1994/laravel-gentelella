@@ -14,19 +14,19 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2>Novo Equipamento </h2>
+                  <h2>Editar Equipamento </h2>
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                   <br>
                   
-                  <form method="POST" action="{{route('equipments_store')}}" id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+                  <form method="POST" action="{{route('equipment_update', ['id' => $equipment->id])}}" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
                     {{csrf_field()}}
                     <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nome <span class="required">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" name="name" autofocus id="name" value="{{old('name')}}" required="required" class="form-control col-md-7 col-xs-12">
+                        <input type="text" name="name" autofocus id="name" value="{{$equipment->name}}" required="required" class="form-control col-md-7 col-xs-12">
                         {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
                       </div>
                     </div>
@@ -37,7 +37,7 @@
                         <select class="form-control" name="brand" required>
                           <option value="">Selecione uma Marca</option>
                           @foreach($brands as $brand)
-                            <option value="{{$brand->id}}">{{$brand->name}}</option>
+                            <option value="{{$brand->id}}" {{ $equipment->brand_id == $brand->id ? 'selected' : '' }}>{{$brand->name}}</option>
                           @endforeach
                         </select>
                         {!! $errors->first('brand', '<p class="help-block">:message</p>') !!}
@@ -45,24 +45,24 @@
                     </div>
 
                     <div class="form-group {!! $errors->has('model') ? 'has-error' : '' !!}">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Modelo <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Modelo
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="model" name="model" required="required" class="form-control col-md-7 col-xs-12">
+                        <input type="text" id="model" name="model" value="{{$equipment->model}}" required="required" class="form-control col-md-7 col-xs-12">
                         {!! $errors->first('model', '<p class="help-block">:message</p>') !!}
                       </div>
                     </div>
                     <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
                       <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nº Ativo </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input id="active" class="form-control col-md-7 col-xs-12" type="text" name="active">
+                        <input id="active" value="{{$equipment->active_code}}" class="form-control col-md-7 col-xs-12" type="text" name="active">
                         {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
                       </div>
                     </div>
                     <div class="form-group {!! $errors->has('serial') ? 'has-error' : '' !!}">
                       <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nº Série </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input id="serial" class="form-control col-md-7 col-xs-12" type="text" name="serial">
+                        <input id="serial" value="{{$equipment->serial}}" class="form-control col-md-7 col-xs-12" type="text" name="serial">
                         {!! $errors->first('serial', '<p class="help-block">:message</p>') !!}
                       </div>
                     </div>
@@ -73,21 +73,12 @@
                         <select class="form-control col-md-7 col-xs-12" name="status" required>
                             <option value="">Selecione um Status</option>
                             @foreach($statuses as $status)
-                              <option value="{{$status->id}}">{{$status->name}}</option>
+                              <option value="{{$status->id}}" {{ $equipment->status_id == $status->id ? 'selected' : '' }}>{{$status->name}}</option>
                             @endforeach
                           </select>
                         {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
                       </div>
                     </div>
-
-                    <div class="form-group {!! $errors->has('qtty') ? 'has-error' : '' !!}">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Quantidade <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="number" value="1" min="1" id="qtty" name="qtty" required="required" class="form-control col-md-7 col-xs-12">
-                          {!! $errors->first('qtty', '<p class="help-block">:message</p>') !!}
-                        </div>
-                      </div>
 
                     <div class="ln_solid"></div>
                     <div class="form-group">

@@ -14,18 +14,18 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2>Nova Marca </h2>
+                  <h2>Editar Marca </h2>
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                   <br>
-                  <form method="POST" action="{{route('brands_store')}}" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+                  <form method="POST" action="{{route('brands_update', ['id' => $brand->id])}}" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
                     {{csrf_field()}}
                     <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Nome
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="name" name="name" value="{{old('name')}}" required="required" class="form-control col-md-7 col-xs-12">
+                        <input type="text" id="name" name="name" value="{{$brand->name}}" required="required" class="form-control col-md-7 col-xs-12">
                         {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
                       </div>
                     </div>

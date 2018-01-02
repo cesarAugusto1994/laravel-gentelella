@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Brand;
+use Illuminate\Support\Facades\Validator;
 
 class BrandsController extends Controller
 {
@@ -48,6 +49,16 @@ class BrandsController extends Controller
     {
         $name = $request->request->get('name');
 
+        $validator = Validator::make(['name' => $name], [
+            'name' => 'required|min:2|max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $someName = Brand::where('name', $name)->get();
 
         if (count($someName) > 0) {
@@ -67,7 +78,7 @@ class BrandsController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -78,7 +89,7 @@ class BrandsController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('admin.brands.edit')->with('brand', Brand::find($id));  
     }
 
     /**
@@ -90,7 +101,13 @@ class BrandsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $brand = Brand::find($id);
+
+        $brand->name = $request->request->get('name');
+
+        $brand->save();
+
+        return redirect()->route('brands');
     }
 
     /**

@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <title>Gentellela Alela! | </title>
+    <title>Controle Ativos! | Login</title>
     
     <!-- Bootstrap -->
     <link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">
@@ -25,30 +25,31 @@
             <section class="login_content">
 				{!! BootForm::open(['url' => url('/login'), 'method' => 'post']) !!}
                     
-				<h1>Login Form</h1>
+				<h1>Login</h1>
 			
-				{!! BootForm::email('email', 'Email', old('email'), ['placeholder' => 'Email', 'afterInput' => '<span>test</span>'] ) !!}
+				{!! BootForm::email('email', 'E-mail', old('email'), ['placeholder' => 'E-mail', 'afterInput' => '<span>test</span>'] ) !!}
 			
-				{!! BootForm::password('password', 'Password', ['placeholder' => 'Password']) !!}
+				{!! BootForm::password('password', 'Senha', ['placeholder' => 'Senha']) !!}
 				
 				<div>
-					{!! BootForm::submit('Log in', ['class' => 'btn btn-default submit']) !!}
-					<a class="reset_pass" href="{{  url('/password/reset') }}">Lost your password ?</a>
+					{!! BootForm::submit('Entrar', ['class' => 'btn btn-default submit col-md-9']) !!}
+					<!--<a class="reset_pass" href="{{  url('/password/reset') }}">Esqueceu sua senha?</a>-->
 				</div>
                     
 				<div class="clearfix"></div>
                     
 				<div class="separator">
-					<p class="change_link">New to site?
+					
+					<!--<p class="change_link">New to site?
 						<a href="{{ url('/register') }}" class="to_register"> Create Account </a>
-					</p>
+					</p>-->
                         
 					<div class="clearfix"></div>
 					<br />
                         
 					<div>
-						<h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-						<p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+						<h1><i class="fa fa-cogs"></i> Controle de Ativos!</h1>
+						<p>©2018 Todos direitos reservados. </p>
 					</div>
 				</div>
 				{!! BootForm::close() !!}

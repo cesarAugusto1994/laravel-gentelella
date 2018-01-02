@@ -10,9 +10,18 @@
     <!-- page content -->
     <div class="right_col" role="main">
 
-        <div class="well">
-            <h2>Controle de Ativos</h2>
+        <div class="row">
+
+            <div class="page-title">
+                    
+        
+                    </div>
+            
+            
+
+
         </div>
+
 
     </div>
     <!-- /page content -->

@@ -10,24 +10,6 @@
     <!-- page content -->
     <div class="right_col" role="main">
 
-        <div class="page-title">
-            <div class="title_left">
-              <h3>Marcas</h3>
-            </div>
-
-            <div class="title_right">
-              <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Search for...">
-                  <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Go!</button>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
@@ -42,15 +24,29 @@
                 <div class="x_content">
 
 
-                  <table class="table table-responsive table-striped">
+                  <table id="datatable-buttons"  class="table table-responsive table-striped">
 
                     <thead>
+                        @if (Auth::user()->isAdmin())
+                          <th>*</th>
+                        @endif
                       <th>Nome</th>
                     </thead>
 
                     <tbody>
                       @foreach($brands as $brand)
                           <tr>
+                              @if (Auth::user()->isAdmin())
+                                <td>
+                                    <div class="input-group-btn">
+                                      <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> <span class="caret"></span>
+                                      </button>
+                                      <ul class="dropdown-menu dropdown-menu-right" role="menu">    
+                                            <li><a href="{{route('brands_edit', ['id' => $brand->id])}}">Editar</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                              @endif
                             <td>{{$brand->name}}</td>
                           </tr>
                       @endforeach

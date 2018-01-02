@@ -38,20 +38,21 @@ class CallEquipmentsController extends Controller
      */
     public function create($call)
     {
-        $equipments = CallEquipments::where('call_id', $call)->get();
-
+    
         if (Req::has('remove-equipment')) {
             
-            $callEquip = CallEquipments::find(Req::input('remove-equipment'));
+            $callEquip = CallEquipments::find(Req::get('remove-equipment'));
             
             $equip = Equipment::find($callEquip->equipment_id);
             
-            $callEquip->destroy($callEquip->equipment_id);
+            $callEquip->delete();
 
             $equip->status_id = Equipment::STATUS_DISPONIVEL; #Agendado
             
             $equip->save();
         }
+
+        $equipments = CallEquipments::where('call_id', $call)->get();
 
         return view('admin.calls.equipments.create')
         ->with('call', Call::find($call))

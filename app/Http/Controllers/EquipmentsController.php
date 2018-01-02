@@ -84,6 +84,7 @@ class EquipmentsController extends Controller
         }
 
         return redirect()->route('equipments')->with('message', 'Novo Equipamento adicionado com sucesso.');
+    
     }
 
     public function filterFromAjax(string $filter)
@@ -112,7 +113,10 @@ class EquipmentsController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('admin.equipments.edit')
+        ->with('equipment', Equipment::find($id))
+        ->with('brands', Brand::all())
+        ->with('statuses', Status::all());     
     }
 
     /**
@@ -124,7 +128,32 @@ class EquipmentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->request->all();
+        
+        $validator = Validator::make($data, [
+            'name' => 'required|min:2|max:255',
+            'brand' => 'required',
+            'model' => 'required',
+            'status' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $equipment = Equipment::find($id);
+        $equipment->name = $data['name'];
+        $equipment->brand_id = $data['brand'];
+        $equipment->model = $data['model'];
+        $equipment->active_code = $data['active'];
+        $equipment->serial = $data['serial'];
+        $equipment->status_id = $data['status'];
+        $equipment->Save();
+
+        return redirect()->route('equipments')->with('message', 'Equipamento editado com sucesso.');
+    
     }
 
     /**

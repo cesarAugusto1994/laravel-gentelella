@@ -95,7 +95,9 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('admin.users.edit')
+        ->with('roles', Role::all())
+        ->with('user', User::find($id));      
     }
 
     /**
@@ -107,7 +109,54 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        
+        $data = $request->request->all();
+
+        $validator = \Illuminate\Support\Facades\Validator::make($data, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255',
+            'roles' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        //$user->roles()->delete();
+
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->save();
+
+        $user->roles()->attach(Role::find($data['roles']));
+
+        return redirect()->route('users');
+    }
+
+    public function updatePassword(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        $password = $request->request->get('password');;
+
+        $validator = \Illuminate\Support\Facades\Validator::make(['password' => $password], [
+            'password' => 'required|min:4|max:20'
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $user->password = $password;
+
+        $user->save();
+
+        return back()->withInput();
     }
 
     /**
