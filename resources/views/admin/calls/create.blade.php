@@ -26,7 +26,6 @@
                       <label for="subject" class="control-label col-md-3 col-sm-3 col-xs-12">Assunto </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control col-md-7 col-xs-12" name="subject" required>
-                            <option value="">Selecione um Assunto</option>
                             @foreach($subjects as $subject)
                               <option value="{{$subject->id}}">{{$subject->subject}}</option>
                             @endforeach

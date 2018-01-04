@@ -63,7 +63,7 @@
                           </tr>
                       @empty
                           <tr>
-                              <td colspan="8"><p class="lead">Sem Equipamento</p></td>
+                              <p>Nenhum Equipamento foi adicionado</p>
                             </tr>
                       @endforelse
                     </tbody>

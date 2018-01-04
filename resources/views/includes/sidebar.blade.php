@@ -55,9 +55,10 @@
                     <li>
                         <a href="{{route('calls')}}">
                             <i class="fa fa-calendar"></i>
-                            Saída Equipamentos
+                            Solicitar Equipamentos
                         </a>
                     </li>
+                    @if(Auth::user()->isAdmin())
                     <li>
                         <a href="{{route('calls_entry')}}">
                             <i class="fa fa-calendar"></i>
@@ -77,6 +78,7 @@
                             <span class="label label-success pull-right">Em breve</span>
                         </a>
                     </li>
+                     @endif
                 </ul>
             </div>
         

@@ -15,18 +15,19 @@
               <div class="x_panel">
                 <div class="x_title">
                   <h2> Chamado nº {{$call->id}}</h2>
+                  @if($call->status == 'AGUARDANDO AUTORIZACAO' && Auth::user()->isAdmin())
+                      <form action="{{route('call_confirm', ['id' => $call->id])}}" method="post">
+                        {{csrf_field()}}
+                      <button type="submit" class="btn btn-success pull-right"><i class="fa fa-check"> </i>&nbsp;Autorizar Chamado</a>                  
+                      </form>
+                  @endif
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
 
                   Para o dia {{ (new DateTime($call->date))->format('d/m/Y') }} |
                   Solicirado por: {{ $call->user->name }}
-                  @if($call->status == 'AGUARDANDO AUTORIZACAO')
-                      <form action="{{route('call_confirm', ['id' => $call->id])}}" method="post">
-                        {{csrf_field()}}
-                      <button type="submit" class="btn btn-success pull-right"><i class="fa fa-check"> </i>&nbsp;Autorizar Chamado</a>                  
-                      </form>
-                  @endif
+                  
                 </div>
               </div>
             </div>
