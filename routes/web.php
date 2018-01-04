@@ -39,6 +39,13 @@ Route::post('/call/{id}/confirm', 'CallsController@confirm')->name('call_confirm
 Route::get('/call/{id}/cancel', 'CallsController@cancel')->name('call_cancel');
 Route::post('/call/{id}/cancel/confirm', 'CallsController@cancelConfirm')->name('call_cancel_confirm');
 
+Route::get('/calls/entry', 'CallsController@entry')->name('calls_entry');
+Route::get('/call/{id}/entry', 'CallsController@entryConfirm')->name('call_entry');
+
+Route::post('/call/{id}/entry/screening', 'CallsController@screening')->name('call_entry_screening');
+
+
+
 Route::prefix('admin')->group(function () {
     
     Route::get('/equipments/create', 'EquipmentsController@create')->name('equipments_create');
@@ -64,6 +71,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/call/subjects', 'CallSubjectsController@index')->name('subjects');
     Route::get('/call/subjects/create', 'CallSubjectsController@create')->name('subjects_create');
     Route::post('/call/subjects/store', 'CallSubjectsController@store')->name('subjects_store');
+
+    Route::get('/screenings', 'CallController@screenings')->name('screenings');
 
     
 });

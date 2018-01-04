@@ -79,7 +79,7 @@ class CallEquipmentsController extends Controller
             $callEquip->status = 'ADICIONADO';
             $callEquip->save();
 
-            $equip->status_id = Equipment::STATUS_AGENDADO; #Agendado
+            $equip->status_id = Equipment::STATUS_RESERVADO; #Agendado
             $equip->save();
 
             $message = "Equipamento {$equip->name} adicionado ao Chamado.";

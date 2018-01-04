@@ -31,7 +31,6 @@
                                 <a href="{{route('equipments')}}">Listagem</a>
                             </li>
                             <li><a href="#">Estoque</a></li>
-                            <li><a href="#">LOGS</a></li>
                         </ul>
                     </li>
                     <li><a><i class="fa fa-laptop"></i> Gerencial <span class="fa fa-chevron-down"></span></a>
@@ -56,21 +55,26 @@
                     <li>
                         <a href="{{route('calls')}}">
                             <i class="fa fa-calendar"></i>
-                            Chamados
+                            Saída Equipamentos
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)">
+                        <a href="{{route('calls_entry')}}">
                             <i class="fa fa-calendar"></i>
-                            Agendamentos
-                            <span class="label label-success pull-right">Flag</span>
+                            Entrada Equipamentos
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('calls_entry')}}">
+                            <i class="fa fa-calendar"></i>
+                            Triagem
                         </a>
                     </li>
                     <li>
                         <a href="javascript:void(0)">
                             <i class="fa fa-file-pdf-o"></i>
                             Relatorios
-                            <span class="label label-success pull-right">Flag</span>
+                            <span class="label label-success pull-right">Em breve</span>
                         </a>
                     </li>
                 </ul>

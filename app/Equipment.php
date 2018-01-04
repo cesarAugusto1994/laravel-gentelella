@@ -9,11 +9,10 @@ use App\Status;
 class Equipment extends Model
 {
     const STATUS_DISPONIVEL = 1;
-    const STATUS_AGENDADO = 2;
-    const STATUS_RESERVADO = 3;
-    const STATUS_EM_USO = 4;
-    const STATUS_TRIAGEM = 5;
-    const STATUS_QUEBRADO = 6;
+    const STATUS_RESERVADO = 2;
+    const STATUS_EM_USO = 3;
+    const STATUS_TRIAGEM = 4;
+    const STATUS_QUEBRADO = 5;
     
     protected $table = 'equipments';
 

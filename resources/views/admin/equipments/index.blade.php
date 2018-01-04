@@ -45,7 +45,7 @@
                                   <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> <span class="caret"></span>
                                   </button>
                                   <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                        <li><a href="">Editar</a>
+                                        <li><a href="{{route('equipment_edit', ['id' => $equipment->id])}}">Editar</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -55,7 +55,7 @@
                             <td>{{$equipment->model}}</td>
                             <td>{{$equipment->active_code}}</td>
                             <td>{{$equipment->serial}}</td>
-                            <td>{{$equipment->date}}</td>
+                            <td>{{(new DateTime($equipment->date))->format('d/m/Y')}}</td>
                             <td>{{$equipment->status->name}}</td>
 
                           </tr>

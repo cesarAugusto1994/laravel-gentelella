@@ -35,6 +35,29 @@ class CallsController extends Controller
         return view('admin.calls.index')->with('calls', $calls);
     }
 
+
+    public function entry()
+    {
+        $calls = Call::where('status', Call::STATUS_AUTORIZADO)->get();
+
+        return view('admin.calls.entry.index')->with('calls', $calls);
+    }
+
+    public function entryConfirm($id)
+    {
+        $call = Call::find($id);
+
+        $callEquipments = CallEquipments::where('call_id', $id)->get();
+
+        $equipments = $callEquipments->map(function($call) {
+            return $call->equipments;
+        });
+
+        return view('admin.calls.entry.confirm')
+        ->with('equipments', $equipments)
+        ->with('call', $call);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -130,8 +153,27 @@ class CallsController extends Controller
         $data = $request->request->all();
 
         $call = Call::find($id);
-        $call->status = 'AGUARDANDO AUTORIZACAO';
+        $call->status = Call::STATUS_AGUARDANDO_AUTORIZACAO;
         $call->save();
+
+        return redirect()->route('calls');
+    }
+
+    public function screening(Request $request, $id)
+    {
+        $data = $request->request->all();
+
+        $call = Call::find($id);
+        $call->status = Call::STATUS_DEVOLVIDO;
+        $call->save();
+
+        $callEquipments = CallEquipments::where('call_id', $id)->get();
+
+        $callEquipments->map(function($call) {
+            $equipment = $call->equipments;
+            $equipment->status_id = Equipment::STATUS_TRIAGEM;
+            $equipment->save(); 
+        });
 
         return redirect()->route('calls');
     }
@@ -141,7 +183,7 @@ class CallsController extends Controller
         $data = $request->request->all();
 
         $call = Call::find($id);
-        $call->status = 'CANCELADO';
+        $call->status = Call::STATUS_CANCELADO;
         $call->save();
 
         $callEquipments = CallEquipments::where('call_id', $id)->get();
@@ -160,7 +202,7 @@ class CallsController extends Controller
         $data = $request->request->all();
 
         $call = Call::find($id);
-        $call->status = 'AUTORIZADO';
+        $call->status = Call::STATUS_AUTORIZADO;
         $call->save();
 
         $callEquipments = CallEquipments::where('call_id', $id)->get();

@@ -59,7 +59,7 @@
         <script>
             $(document).ready(function(){
                 $('.datepicker').datepicker({
-                    format: 'mm/dd/yyyy',
+                    format: 'dd/mm/yyyy',
                     startDate: '0d',
                     language: "pt-BR",
                     autoclose: true,
