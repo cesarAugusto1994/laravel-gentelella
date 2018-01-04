@@ -6,23 +6,6 @@
 <!-- page content -->
 <div class="right_col" role="main">
 
-	<div class="page-title">
-		<div class="title_left">
-			<h3>Chamados</h3>
-		</div>
-
-		<div class="title_right">
-			<div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Search for...">
-					<span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Go!</button>
-                  </span>
-				</div>
-			</div>
-		</div>
-	</div>
-
 	<div class="row">
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<div class="x_panel">
@@ -30,6 +13,8 @@
 					<h2>Equipamentos
 					</h2>
 
+					<a href="{{route('call', ['id' => $call->id])}}" class="btn btn-success btn-xs pull-right">Finalizar Chamado</a>								
+					
 					<a href="{{route('equipments_add', ['call' => $call->id])}}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-plus"> </i>&nbsp;Adicionar Equipamento</a>
 
 					<div class="clearfix"></div>
@@ -54,13 +39,13 @@
 										<td>
 											<a href="?remove-equipment={{$equipment->id}}" class="btn btn-danger btn-xs btn-default">Remover</a>
 										</td>
-										<td>{{$equipment->equipment_id}}</td>
-										<td>@{{$equipment->brand->name}}</td>
+										<td>{{$equipment->name}}</td>
+										<td>{{$equipment->brand->name}}</td>
 										<td>{{$equipment->model}}</td>
 										<td>{{$equipment->active_code}}</td>
 										<td>{{$equipment->serial}}</td>
-										<td>{{$equipment->date}}</td>
-										<td>@{{$equipment->status->name}}</td>
+										<td>{{(new Datetime($equipment->date))->format('d/m/Y')}}</td>
+										<td>{{$equipment->status->name}}</td>
 		
 									</tr>
 									@empty

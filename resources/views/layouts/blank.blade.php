@@ -19,7 +19,9 @@
         <link href="{{ asset("css/gentelella.min.css") }}" rel="stylesheet">
 
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css"/>
-    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css"/>
+        
+
 
         @stack('stylesheets')
 
@@ -51,7 +53,20 @@
         <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 
         <script src="https://cdn.jsdelivr.net/npm/bootcomplete@0.0.9/index.min.js"></script>          
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
 
+        <script>
+            $(document).ready(function(){
+                $('.datepicker').datepicker({
+                    format: 'mm/dd/yyyy',
+                    startDate: '0d',
+                    language: "pt-BR",
+                    autoclose: true,
+                    todayHighlight: true
+                });
+            });
+        </script>
         @stack('scripts')
 
     </body>

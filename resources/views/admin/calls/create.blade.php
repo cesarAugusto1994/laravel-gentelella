@@ -38,7 +38,7 @@
                     <div class="form-group {!! $errors->has('date') ? 'has-error' : '' !!}">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Para o dia </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input id="date" class="form-control col-md-7 col-xs-12" type="text" name="date">
+                        <input id="date" required class="form-control col-md-7 col-xs-12 datepicker" type="text" name="date">
                         {!! $errors->first('date', '<p class="help-block">:message</p>') !!}
                       </div>
                     </div>

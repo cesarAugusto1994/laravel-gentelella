@@ -40,9 +40,10 @@ class CallEquipmentsController extends Controller
     {
     
         if (Req::has('remove-equipment')) {
-            
-            $callEquip = CallEquipments::find(Req::get('remove-equipment'));
-            
+
+            $callEquip = CallEquipments::where('call_id', $call)
+            ->where('equipment_id', Req::get('remove-equipment'))->first();
+
             $equip = Equipment::find($callEquip->equipment_id);
             
             $callEquip->delete();
@@ -52,7 +53,11 @@ class CallEquipmentsController extends Controller
             $equip->save();
         }
 
-        $equipments = CallEquipments::where('call_id', $call)->get();
+        $callEquipments = CallEquipments::where('call_id', $call)->get();
+
+        $equipments = $callEquipments->map(function($call) {
+            return $call->equipments;
+        });
 
         return view('admin.calls.equipments.create')
         ->with('call', Call::find($call))

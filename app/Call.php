@@ -17,4 +17,9 @@ class Call extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function equipemnts()
+    {
+        return $this->hasMany(Equipment::class);
+    }
 }

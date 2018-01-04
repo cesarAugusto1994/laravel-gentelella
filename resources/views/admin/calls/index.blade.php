@@ -39,22 +39,27 @@
                           <tr>
                               <td>
                                   <div class="input-group-btn">
+                                   
                                     <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> <span class="caret"></span>
                                     </button>
+                                    
                                     <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                        @if($call->status == 'ABERTO' || $call->status == 'AGUARDANDO AUTORIZACAO')
                                         <li><a href="{{route('call_equipments_create', ['call' => $call->id])}}">Editar</a>
                                         </li>
-                                        <li><a href="#">Logs</a>
+                                        @endif
+                                        @if($call->status == 'AGUARDANDO AUTORIZACAO' && Auth::user()->isAdmin())
+                                        <li><a href="{{route('call_equipments_create', ['call' => $call->id])}}">Autorizar</a>
                                         </li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Inativar</a>
+                                        @endif
+                                        <li><a href="#">Cancelar</a>
                                         </li>
                                       </ul>
                                   </div>
                               </td>
                             <td>{{$call->subject->subject}}</td>
                             <td>{{$call->user->name}}</td>
-                            <td>{{$call->date}}</td>
+                            <td>{{(new Datetime($call->date))->format('d/m/Y')}}</td>
                             <td>{{$call->status}}</td>
                           </tr>
                       @endforeach

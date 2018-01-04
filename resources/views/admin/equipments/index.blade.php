@@ -45,7 +45,7 @@
                                   <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> <span class="caret"></span>
                                   </button>
                                   <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                        <li><a href="{{route('user_edit', ['id' => $user->id])}}">Editar</a>
+                                        <li><a href="">Editar</a>
                                         </li>
                                     </ul>
                                 </div>

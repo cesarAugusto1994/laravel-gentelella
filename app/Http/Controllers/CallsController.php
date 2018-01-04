@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Call;
 use App\CallSubjects;
+use App\CallEquipments;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
@@ -82,7 +83,33 @@ class CallsController extends Controller
      */
     public function show($id)
     {
-        //
+        $call = Call::find($id);
+        $callEquipments = CallEquipments::where('call_id', $id)->get();
+
+
+        $equipments = $callEquipments->map(function($call) {
+            return $call->equipments;
+        });
+
+        return view('admin.calls.finish')
+        ->with('call', $call)
+        ->with('equipments', $equipments);
+    }
+
+    public function execute(Request $request, $id)
+    {
+        $data = $request->request->all();
+
+        $call = Call::find($id);
+        $call->status = 'AGUARDANDO AUTORIZACAO';
+        $call->save();
+
+        return redirect()->route('calls');
+    }
+
+    public function renderSuccessView()
+    {
+        return view('admin.calls.message');
     }
 
     /**

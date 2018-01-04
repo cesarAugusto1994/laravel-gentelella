@@ -36,4 +36,9 @@ class Equipment extends Model
     {
         return $this->belongsTo(Status::class, 'status_id');
     }
+
+    public function call()
+    {
+        return $this->belongsTo(Call::class);
+    }
 }

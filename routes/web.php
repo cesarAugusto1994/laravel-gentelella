@@ -29,6 +29,9 @@ Route::post('/calls/store', 'CallsController@store')->name('calls_store');
 
 Route::get('/call/{call}/equipments/create', 'CallEquipmentsController@create')->name('call_equipments_create');
 
+Route::get('/call/{id}', 'CallsController@show')->name('call');
+Route::get('/call/success', 'CallsController@renderSuccessView')->name('call_success');
+Route::post('/call/{id}/finish', 'CallsController@execute')->name('call_finish');
 
 Route::prefix('admin')->group(function () {
     

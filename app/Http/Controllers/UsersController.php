@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Validation\Validator;
 use App\Role;
+use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
@@ -130,6 +131,8 @@ class UsersController extends Controller
         $user->name = $data['name'];
         $user->email = $data['email'];
         $user->save();
+
+        DB::table('role_user')->where('user_id', $user->id)->delete();
 
         $user->roles()->attach(Role::find($data['roles']));
 
