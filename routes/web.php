@@ -33,6 +33,12 @@ Route::get('/call/{id}', 'CallsController@show')->name('call');
 Route::get('/call/success', 'CallsController@renderSuccessView')->name('call_success');
 Route::post('/call/{id}/finish', 'CallsController@execute')->name('call_finish');
 
+Route::get('/call/{id}/confirmation', 'CallsController@confirmation')->name('call_confirmation');
+Route::post('/call/{id}/confirm', 'CallsController@confirm')->name('call_confirm');
+
+Route::get('/call/{id}/cancel', 'CallsController@cancel')->name('call_cancel');
+Route::post('/call/{id}/cancel/confirm', 'CallsController@cancelConfirm')->name('call_cancel_confirm');
+
 Route::prefix('admin')->group(function () {
     
     Route::get('/equipments/create', 'EquipmentsController@create')->name('equipments_create');

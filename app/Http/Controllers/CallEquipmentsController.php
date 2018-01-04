@@ -67,6 +67,7 @@ class CallEquipmentsController extends Controller
     public function add($call)
     {
         $result = $filter = [];
+        $message = '';
 
         if (Req::has('add-equipment')) {
             
@@ -80,6 +81,8 @@ class CallEquipmentsController extends Controller
 
             $equip->status_id = Equipment::STATUS_AGENDADO; #Agendado
             $equip->save();
+
+            $message = "Equipamento {$equip->name} adicionado ao Chamado.";
         }
 
         if (Req::has('filter')) {
@@ -90,6 +93,7 @@ class CallEquipmentsController extends Controller
         return view('admin.calls.equipments.add')
         ->with('call', Call::find($call))
         ->with('equipments', $result)
+        ->with('message', $message)
         ->with('filter', Req::input('filter'));
     }
 

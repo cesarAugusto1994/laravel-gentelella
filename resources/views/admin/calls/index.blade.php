@@ -44,16 +44,19 @@
                                     </button>
                                     
                                     <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                        <li><a href="{{route('call_confirmation', ['id' => $call->id])}}">Visualizar</a>
                                         @if($call->status == 'ABERTO' || $call->status == 'AGUARDANDO AUTORIZACAO')
                                         <li><a href="{{route('call_equipments_create', ['call' => $call->id])}}">Editar</a>
                                         </li>
                                         @endif
                                         @if($call->status == 'AGUARDANDO AUTORIZACAO' && Auth::user()->isAdmin())
-                                        <li><a href="{{route('call_equipments_create', ['call' => $call->id])}}">Autorizar</a>
+                                        <li><a href="{{route('call_confirmation', ['id' => $call->id])}}">Autorizar</a>
                                         </li>
                                         @endif
-                                        <li><a href="#">Cancelar</a>
+                                        @if($call->status == 'ABERTO' || $call->status == 'AGUARDANDO AUTORIZACAO')
+                                        <li><a href="{{route('call_cancel', ['id' => $call->id])}}">Cancelar</a>
                                         </li>
+                                        @endif
                                       </ul>
                                   </div>
                               </td>

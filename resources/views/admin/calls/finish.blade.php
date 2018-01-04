@@ -14,7 +14,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2> Chamado {{$call->id}}</h2>
+                  <h2> Chamado nº {{$call->id}}</h2>
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
@@ -57,7 +57,7 @@
                         <tbody>
                           @forelse($equipments as $equipment)
                           <tr>
-                            <td>{{$equipment->id}}</td>
+                            <td>{{$equipment->name}}</td>
                             <td>{{$equipment->brand->name}}</td>
                             <td>{{$equipment->model}}</td>
                             <td>{{$equipment->active_code}}</td>

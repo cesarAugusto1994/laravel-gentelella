@@ -50,6 +50,10 @@
 				</div>
 				<div class="x_content">
 
+					@if($message)
+						<div class="alert alert-success">{{$message}}</div>
+					@endif
+
 					<table id="datatable-buttons" class="table table-striped table-bordered dataTable no-footer dtr-inline">
 						<thead>
 							<th>*</th>

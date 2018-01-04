@@ -14,19 +14,17 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2> Chamado nº {{$call->id}}</h2>
+                  <h2> Chamado {{$call->id}}</h2>
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
 
                   Para o dia {{ (new DateTime($call->date))->format('d/m/Y') }} |
                   Solicirado por: {{ $call->user->name }}
-                  @if($call->status == 'AGUARDANDO AUTORIZACAO')
-                      <form action="{{route('call_confirm', ['id' => $call->id])}}" method="post">
-                        {{csrf_field()}}
-                      <button type="submit" class="btn btn-success pull-right"><i class="fa fa-check"> </i>&nbsp;Autorizar Chamado</a>                  
-                      </form>
-                  @endif
+                  <form action="{{route('call_confirm', ['id' => $call->id])}}" method="post">
+                    {{csrf_field()}}
+                  <button type="submit" class="btn btn-success pull-right"><i class="fa fa-check"> </i>&nbsp;Autorizar Chamado</a>                  
+                  </form>
                 </div>
               </div>
             </div>

@@ -8,6 +8,7 @@ use App\CallSubjects;
 use App\CallEquipments;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use App\Equipment;
 
 class CallsController extends Controller
 {
@@ -96,6 +97,34 @@ class CallsController extends Controller
         ->with('equipments', $equipments);
     }
 
+    public function confirmation($id)
+    {
+        $call = Call::find($id);
+        $callEquipments = CallEquipments::where('call_id', $id)->get();
+
+        $equipments = $callEquipments->map(function($call) {
+            return $call->equipments;
+        });
+
+        return view('admin.calls.confirmation')
+        ->with('call', $call)
+        ->with('equipments', $equipments);
+    }
+
+    public function cancel($id)
+    {
+        $call = Call::find($id);
+        $callEquipments = CallEquipments::where('call_id', $id)->get();
+
+        $equipments = $callEquipments->map(function($call) {
+            return $call->equipments;
+        });
+
+        return view('admin.calls.cancel')
+        ->with('call', $call)
+        ->with('equipments', $equipments);
+    }
+
     public function execute(Request $request, $id)
     {
         $data = $request->request->all();
@@ -103,6 +132,44 @@ class CallsController extends Controller
         $call = Call::find($id);
         $call->status = 'AGUARDANDO AUTORIZACAO';
         $call->save();
+
+        return redirect()->route('calls');
+    }
+
+    public function cancelConfirm(Request $request, $id)
+    {
+        $data = $request->request->all();
+
+        $call = Call::find($id);
+        $call->status = 'CANCELADO';
+        $call->save();
+
+        $callEquipments = CallEquipments::where('call_id', $id)->get();
+
+        $callEquipments->map(function($call) {
+            $equipment = $call->equipments;
+            $equipment->status_id = Equipment::STATUS_DISPONIVEL;
+            $equipment->save();
+        });
+
+        return redirect()->route('calls');
+    }
+
+    public function confirm(Request $request, $id)
+    {
+        $data = $request->request->all();
+
+        $call = Call::find($id);
+        $call->status = 'AUTORIZADO';
+        $call->save();
+
+        $callEquipments = CallEquipments::where('call_id', $id)->get();
+
+        $callEquipments->map(function($call) {
+            $equipment = $call->equipments;
+            $equipment->status_id = Equipment::STATUS_EM_USO;
+            $equipment->save();
+        });
 
         return redirect()->route('calls');
     }

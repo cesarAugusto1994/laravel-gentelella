@@ -13,8 +13,9 @@
 					<h2>Equipamentos
 					</h2>
 
-					<a href="{{route('call', ['id' => $call->id])}}" class="btn btn-success btn-xs pull-right">Finalizar Chamado</a>								
-					
+					@if($equipments->isNotEmpty())
+						<a href="{{route('call', ['id' => $call->id])}}" class="btn btn-success btn-xs pull-right">Finalizar Chamado</a>								
+					@endif
 					<a href="{{route('equipments_add', ['call' => $call->id])}}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-plus"> </i>&nbsp;Adicionar Equipamento</a>
 
 					<div class="clearfix"></div>
