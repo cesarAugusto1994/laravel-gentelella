@@ -14,21 +14,13 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2>Devolução de Equipamentos
+                  <h2>Triagem
                     </h2>
-                      <form action="{{route('call_entry_screening', ['id' => $call->id])}}" method="post">
-                          {{csrf_field()}}
-                          <button type="submit" class="btn btn-success btn-xs pull-right"><i class="fa fa-check"> </i>&nbsp;Iniciar Triagem de Equipamentos</a>                  
-                      </form>
+                    
                       <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                  <p>
-                      Para o dia {{ (new DateTime($call->date))->format('d/m/Y') }} 
-                  </p>
-                  <p>
-                      Solicirado por: {{ $call->user->name }}
-                  </p>
+                 
                 </div>
               </div>
             </div>
@@ -59,6 +51,21 @@
                         <tbody>
                           @forelse($equipments as $equipment)
                           <tr>
+                            <td>
+                          
+                                <div class="input-group-btn">
+                                  <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> <span class="caret"></span>
+                                  </button>
+                                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                        <li>
+                                          <form action="{{route('equipment_back_to_stock', ['id' => $equipment->id])}}" method="post">
+                                            {{csrf_field()}}
+                                          <button type="submit" class="btn btn-link">Retornar Ao Estoque</button>                  
+                                          </form>
+                                          </li>
+                                    </ul>
+                                </div>
+                            </td>
                             <td>{{$equipment->name}}</td>
                             <td>{{$equipment->brand->name}}</td>
                             <td>{{$equipment->model}}</td>

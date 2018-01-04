@@ -53,6 +53,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/equipment/{id}/edit', 'EquipmentsController@edit')->name('equipment_edit');
     Route::post('/equipment/{id}/update', 'EquipmentsController@update')->name('equipment_update');
 
+    Route::post('/equipment/{id}/back/stock', 'EquipmentsController@backToStock')->name('equipment_back_to_stock');
+
+    
+
     Route::get('/brands/create', 'BrandsController@create')->name('brands_create');
     Route::post('/brands/store', 'BrandsController@store')->name('brands_store');
     Route::get('/brand/{id}/edit', 'BrandsController@edit')->name('brands_edit');
@@ -72,7 +76,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/call/subjects/create', 'CallSubjectsController@create')->name('subjects_create');
     Route::post('/call/subjects/store', 'CallSubjectsController@store')->name('subjects_store');
 
-    Route::get('/screenings', 'CallController@screenings')->name('screenings');
+    Route::get('/screenings', 'CallsController@screenings')->name('screenings');
 
     
 });

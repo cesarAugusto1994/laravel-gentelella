@@ -120,6 +120,15 @@ class CallsController extends Controller
         ->with('equipments', $equipments);
     }
 
+    public function screenings()
+    {
+
+        $equipments = Equipment::where('status_id', Equipment::STATUS_TRIAGEM)->get();
+
+        return view('admin.calls.screenings.index')
+        ->with('equipments', $equipments);
+    }
+
     public function confirmation($id)
     {
         $call = Call::find($id);

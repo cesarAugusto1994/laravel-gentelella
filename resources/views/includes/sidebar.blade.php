@@ -65,7 +65,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('calls_entry')}}">
+                        <a href="{{route('screenings')}}">
                             <i class="fa fa-calendar"></i>
                             Triagem
                         </a>

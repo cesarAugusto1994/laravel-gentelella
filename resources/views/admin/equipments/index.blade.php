@@ -41,6 +41,7 @@
                       @forelse($equipments as $equipment)
                           <tr>
                             <td>
+                              @if($equipment->status->id == App\Equipment::STATUS_DISPONIVEL)
                                 <div class="input-group-btn">
                                   <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> <span class="caret"></span>
                                   </button>
@@ -49,6 +50,7 @@
                                         </li>
                                     </ul>
                                 </div>
+                              @endif
                             </td>
                             <td>{{$equipment->name}}</td>
                             <td>{{$equipment->brand->name}}</td>

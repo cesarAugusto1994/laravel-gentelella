@@ -94,6 +94,17 @@ class EquipmentsController extends Controller
         return $result->get()->toJson();
     }
 
+    public function backToStock(Request $request, $id)
+    {
+        $data = $request->request->all();
+
+        $equipment = Equipment::find($id);
+        $equipment->status_id = Equipment::STATUS_DISPONIVEL;
+        $equipment->save();
+
+        return redirect()->route('screenings'); 
+    }
+
     /**
      * Display the specified resource.
      *
