@@ -21,11 +21,30 @@
                 <div class="x_content">
 
 
-                  <table id="datatable-buttons" class="table table-striped table-bordered dataTable no-footer dtr-inline">
+                  <table id="table"
+                      class="table table-bordered table-responsive table-hover"
+                      data-toggle="table"
+                      data-striped="true"
+                      data-search="true"
+                      data-show-toggle="true"
+                      data-show-columns="true"
+                      data-pagination="true"
+                      data-single-select="true"
+                      data-maintain-selected="true"
+                      data-show-pagination-switch="true"
+                      data-sortable="true"
+                      data-show-export="true"
+                      data-click-to-select="true"
+                      data-flat="true"
+                      data-show-refresh="true"
+                      data-advanced-search="true"
+                      data-toolbar="#toolbar"
+               >
 
                     <thead>
                       <th></th>
                       <th>Assunto</th>
+                      <th>Equipamento</th>
                       <th>Usuário</th>
                       <th>Data</th>
                       <th>Situação</th>
@@ -34,25 +53,18 @@
                     <tbody>
                       @foreach($calls as $call)
                           <tr>
-                              <td>
-                                  <div class="input-group-btn">
-                                   
-                                    <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> <span class="caret"></span>
-                                    </button>
-                                    
-                                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                        <li><a href="{{route('call_confirmation', ['id' => $call->id])}}">Visualizar</a>
-                                        @if($call->status == 'AUTORIZADO' || $call->status == 'AGUARDANDO AUTORIZACAO')
-                                        <li><a href="{{route('call_entry', ['id' => $call->id])}}">Iniciar Entrada</a>
-                                        </li>
-                                        @endif
-                                      </ul>
-                                  </div>
-                              </td>
+
                             <td>{{$call->subject->subject}}</td>
+                            <td>{{$call->equipment->name}}</td>
                             <td>{{$call->user->name}}</td>
                             <td>{{(new Datetime($call->date))->format('d/m/Y')}}</td>
                             <td>{{$call->status}}</td>
+                            <td>
+                                  <a class="btn btn-xs btn-default" href="{{route('call_confirmation', ['id' => $call->id])}}">Visualizar</a>
+                                  @if($call->status == App\Call::STATUS_AUTORIZADO || $call->status == App\Call::STATUS_AGUARDANDO_AUTORIZACAO)
+                                      <a class="btn btn-xs btn-success" href="{{route('call_entry', ['id' => $call->id])}}">Iniciar Entrada</a>
+                                  @endif
+                            </td>
                           </tr>
                       @endforeach
                     </tbody>

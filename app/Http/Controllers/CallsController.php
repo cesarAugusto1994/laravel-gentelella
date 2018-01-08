@@ -9,6 +9,7 @@ use App\CallEquipments;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Equipment;
+use App\Models\User;
 
 class CallsController extends Controller
 {
@@ -35,26 +36,19 @@ class CallsController extends Controller
         return view('admin.calls.index')->with('calls', $calls);
     }
 
-
     public function entry()
     {
         $calls = Call::where('status', Call::STATUS_AUTORIZADO)->get();
 
-        return view('admin.calls.entry.index')->with('calls', $calls);
+        return view('admin.calls.entry.index')
+        ->with('calls', $calls);
     }
 
     public function entryConfirm($id)
     {
         $call = Call::find($id);
 
-        $callEquipments = CallEquipments::where('call_id', $id)->get();
-
-        $equipments = $callEquipments->map(function($call) {
-            return $call->equipments;
-        });
-
         return view('admin.calls.entry.confirm')
-        ->with('equipments', $equipments)
         ->with('call', $call);
     }
 
@@ -65,7 +59,9 @@ class CallsController extends Controller
      */
     public function create()
     {
-        return view('admin.calls.create')->with('subjects', CallSubjects::all());
+        return view('admin.calls.create')
+        ->with('subjects', CallSubjects::all())
+        ->with('users', User::all());
     }
 
     /**
@@ -77,10 +73,10 @@ class CallsController extends Controller
     public function store(Request $request)
     {
         $data = $request->request->all();
-        
+
         $validator = Validator::make($data, [
             'subject' => 'required',
-            'date' => 'required',
+            'approval_date' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -91,12 +87,14 @@ class CallsController extends Controller
 
         $call = new Call();
         $call->subject_id = $data['subject'];
-        $call->date = \DateTime::createFromFormat('d/m/Y', $data['date']);
-        $call->user_id = Auth::user()->id;
-        $call->status = 'ABERTO';
+        $call->approval_date = \DateTime::createFromFormat('d/m/Y', $data['approval_date']);
+        $call->user_id = $data['user'];
+        $call->external_code = $data['external_code'];
+        $call->description = $data['description'];
+        $call->status = Call::STATUS_ABERTO;
         $call->save();
 
-        return redirect()->route('call_equipments_create', ['call' => $call->id]);
+        return redirect()->route('call_equipments_create', ['id' => $call->id]);
     }
 
     /**
@@ -108,21 +106,13 @@ class CallsController extends Controller
     public function show($id)
     {
         $call = Call::find($id);
-        $callEquipments = CallEquipments::where('call_id', $id)->get();
-
-
-        $equipments = $callEquipments->map(function($call) {
-            return $call->equipments;
-        });
 
         return view('admin.calls.finish')
-        ->with('call', $call)
-        ->with('equipments', $equipments);
+        ->with('call', $call);
     }
 
     public function screenings()
     {
-
         $equipments = Equipment::where('status_id', Equipment::STATUS_TRIAGEM)->get();
 
         return view('admin.calls.screenings.index')
@@ -132,15 +122,9 @@ class CallsController extends Controller
     public function confirmation($id)
     {
         $call = Call::find($id);
-        $callEquipments = CallEquipments::where('call_id', $id)->get();
-
-        $equipments = $callEquipments->map(function($call) {
-            return $call->equipments;
-        });
 
         return view('admin.calls.confirmation')
-        ->with('call', $call)
-        ->with('equipments', $equipments);
+        ->with('call', $call);
     }
 
     public function cancel($id)
@@ -181,7 +165,7 @@ class CallsController extends Controller
         $callEquipments->map(function($call) {
             $equipment = $call->equipments;
             $equipment->status_id = Equipment::STATUS_TRIAGEM;
-            $equipment->save(); 
+            $equipment->save();
         });
 
         return redirect()->route('calls');
@@ -214,13 +198,13 @@ class CallsController extends Controller
         $call->status = Call::STATUS_AUTORIZADO;
         $call->save();
 
-        $callEquipments = CallEquipments::where('call_id', $id)->get();
+        if(!$call->equipment_id) {
+            throw new Exception('Equipamento não informado.');
+        }
 
-        $callEquipments->map(function($call) {
-            $equipment = $call->equipments;
-            $equipment->status_id = Equipment::STATUS_EM_USO;
-            $equipment->save();
-        });
+        $equipment = Equipment::find($call->equipment_id);
+        $equipment->status_id = Equipment::STATUS_EM_USO;
+        $equipment->save();
 
         return redirect()->route('calls');
     }

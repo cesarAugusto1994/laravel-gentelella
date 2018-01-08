@@ -16,11 +16,11 @@
                 <div class="x_title">
                   <h2>Triagem
                     </h2>
-                    
+
                       <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                 
+
                 </div>
               </div>
             </div>
@@ -36,8 +36,26 @@
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-        
-                  <table id="datatable-buttons" class="table table-striped table-bordered dataTable no-footer dtr-inline">
+
+                  <table id="table"
+                      class="table table-bordered table-responsive table-hover"
+                      data-toggle="table"
+                      data-striped="true"
+                      data-search="true"
+                      data-show-toggle="true"
+                      data-show-columns="true"
+                      data-pagination="true"
+                      data-single-select="true"
+                      data-maintain-selected="true"
+                      data-show-pagination-switch="true"
+                      data-sortable="true"
+                      data-show-export="true"
+                      data-click-to-select="true"
+                      data-flat="true"
+                      data-show-refresh="true"
+                      data-advanced-search="true"
+                      data-toolbar="#toolbar"
+               >
                       <thead>
                           <th>Nome</th>
                           <th>Marca</th>
@@ -47,12 +65,12 @@
                           <th>Entrada</th>
                           <th>Status</th>
                         </thead>
-            
+
                         <tbody>
                           @forelse($equipments as $equipment)
                           <tr>
                             <td>
-                          
+
                                 <div class="input-group-btn">
                                   <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> <span class="caret"></span>
                                   </button>
@@ -60,7 +78,7 @@
                                         <li>
                                           <form action="{{route('equipment_back_to_stock', ['id' => $equipment->id])}}" method="post">
                                             {{csrf_field()}}
-                                          <button type="submit" class="btn btn-link">Retornar Ao Estoque</button>                  
+                                          <button type="submit" class="btn btn-link">Retornar Ao Estoque</button>
                                           </form>
                                           </li>
                                     </ul>
@@ -73,22 +91,22 @@
                             <td>{{$equipment->serial}}</td>
                             <td>{{(new DateTime($equipment->date))->format('d/m/Y')}}</td>
                             <td>{{$equipment->status->name}}</td>
-            
+
                           </tr>
                           @empty
                           <tr>
                             <td colspan="8">
-                              <p class="lead">Sem Equipamento</p>
+                              <p>Nenhum Equipamento foi adicionado</p>
                             </td>
                           </tr>
                           @endforelse
                         </tbody>
                   </table>
-        
+
                 </div>
               </div>
             </div>
-  
+
           </div>
     </div>
     <!-- /page content -->

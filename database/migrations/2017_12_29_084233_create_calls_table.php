@@ -22,10 +22,17 @@ class CreateCallsTable extends Migration
         });
 
         Schema::create('calls', function (Blueprint $table) {
-            
+
             $table->increments('id');
 
+            $table->integer('external_code')->nullable();
+
             $table->integer('subject_id');
+
+            $table->string('description')->nullable();
+
+            $table->integer('equipment_id')->unsigned()->nullable();
+            $table->foreign('equipment_id')->references('id')->on('equipments');
 
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
@@ -33,7 +40,7 @@ class CreateCallsTable extends Migration
             $table->integer('approver_id')->unsigned()->nullable();
             $table->foreign('approver_id')->references('id')->on('users');
 
-            $table->date('date');            
+            $table->date('approval_date');
 
             $table->string('status');
 

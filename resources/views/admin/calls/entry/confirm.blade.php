@@ -14,17 +14,17 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2>Devolução de Equipamentos
+                  <h2>Devolução de Equipamento
                     </h2>
                       <form action="{{route('call_entry_screening', ['id' => $call->id])}}" method="post">
                           {{csrf_field()}}
-                          <button type="submit" class="btn btn-success btn-xs pull-right"><i class="fa fa-check"> </i>&nbsp;Iniciar Triagem de Equipamentos</a>                  
+                          <button type="submit" class="btn btn-success btn-xs pull-right"><i class="fa fa-check"> </i>&nbsp;Iniciar Triagem do Equipamento</a>
                       </form>
                       <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                   <p>
-                      Para o dia {{ (new DateTime($call->date))->format('d/m/Y') }} 
+                      Para o dia {{ (new DateTime($call->date))->format('d/m/Y') }}
                   </p>
                   <p>
                       Solicirado por: {{ $call->user->name }}
@@ -44,7 +44,7 @@
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-        
+
                   <table id="datatable-buttons" class="table table-striped table-bordered dataTable no-footer dtr-inline">
                       <thead>
                           <th>Nome</th>
@@ -55,33 +55,33 @@
                           <th>Entrada</th>
                           <th>Status</th>
                         </thead>
-            
+
                         <tbody>
-                          @forelse($equipments as $equipment)
+                          @if($call->equipment)
                           <tr>
-                            <td>{{$equipment->name}}</td>
-                            <td>{{$equipment->brand->name}}</td>
-                            <td>{{$equipment->model}}</td>
-                            <td>{{$equipment->active_code}}</td>
-                            <td>{{$equipment->serial}}</td>
-                            <td>{{(new DateTime($equipment->date))->format('d/m/Y')}}</td>
-                            <td>{{$equipment->status->name}}</td>
-            
+                            <td>{{$call->equipment->name}}</td>
+                            <td>{{$call->equipment->brand->name}}</td>
+                            <td>{{$call->equipment->model_id}}</td>
+                            <td>{{$call->equipment->active_code}}</td>
+                            <td>{{$call->equipment->serial}}</td>
+                            <td>{{(new DateTime($call->equipment->date))->format('d/m/Y')}}</td>
+                            <td>{{$call->equipment->status->name}}</td>
+
                           </tr>
-                          @empty
+                          @else
                           <tr>
                             <td colspan="8">
-                              <p class="lead">Sem Equipamento</p>
+                              <p>Nenhum Equipamento foi adicionado</p>
                             </td>
                           </tr>
-                          @endforelse
+                          @endif
                         </tbody>
                   </table>
-        
+
                 </div>
               </div>
             </div>
-  
+
           </div>
     </div>
     <!-- /page content -->

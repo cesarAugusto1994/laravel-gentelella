@@ -3,9 +3,9 @@
         <div class="navbar nav_title" style="border: 0;">
             <a href="{{ url('/') }}" class="site_title"><i class="fa fa-home"></i> <span>Controle Ativos</span></a>
         </div>
-        
+
         <div class="clearfix"></div>
-        
+
         <!-- menu profile quick info -->
         <div class="profile">
             <div class="profile_pic">
@@ -17,9 +17,9 @@
             </div>
         </div>
         <!-- /menu profile quick info -->
-        
+
         <br />
-        
+
         <!-- sidebar menu -->
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
             <div class="menu_section">
@@ -36,6 +36,7 @@
                     <li><a><i class="fa fa-laptop"></i> Gerencial <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="{{route('brands')}}">Marcas</a></li>
+                            <li><a href="{{route('models')}}">Modelos</a></li>
                             <li><a href="{{route('statuses')}}">Situações</a></li>
                             <li><a href="{{route('subjects')}}">Assuntos Chamados</a></li>
                             <li><a href="{{route('users')}}">Usuários</a></li>
@@ -81,10 +82,10 @@
                      @endif
                 </ul>
             </div>
-        
+
         </div>
         <!-- /sidebar menu -->
-        
+
         <!-- /menu footer buttons -->
         <div class="sidebar-footer hidden-small">
             <a data-toggle="tooltip" data-placement="top" title="Settings">

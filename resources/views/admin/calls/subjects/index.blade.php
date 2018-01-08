@@ -18,7 +18,25 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-					<table id="datatable-buttons" class="table table-striped table-bordered dataTable no-footer dtr-inline">
+					<table id="table"
+							class="table table-bordered table-responsive table-hover"
+							data-toggle="table"
+							data-striped="true"
+							data-search="true"
+							data-show-toggle="true"
+							data-show-columns="true"
+							data-pagination="true"
+							data-single-select="true"
+							data-maintain-selected="true"
+							data-show-pagination-switch="true"
+							data-sortable="true"
+							data-show-export="true"
+							data-click-to-select="true"
+							data-flat="true"
+							data-show-refresh="true"
+							data-advanced-search="true"
+							data-toolbar="#toolbar"
+			 >
 						<thead>
 							<th>Assunto</th>
 						</thead>

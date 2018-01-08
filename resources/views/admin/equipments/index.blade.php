@@ -14,7 +14,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2>Equipamentos 
+                  <h2>Equipamentos
                     </h2>
                     @if(Auth::user()->isAdmin())
                       <a href="{{route('equipments_create')}}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-plus"> </i>&nbsp;Novo Equipamento</a>
@@ -24,7 +24,25 @@
                 <div class="x_content">
 
 
-                  <table id="datatable-buttons" class="table table-responsive table-striped table-hover">
+                  <table id="table"
+                      class="table table-bordered table-responsive table-hover"
+                      data-toggle="table"
+                      data-striped="true"
+                      data-search="true"
+                      data-show-toggle="true"
+                      data-show-columns="true"
+                      data-pagination="true"
+                      data-single-select="true"
+                      data-maintain-selected="true"
+                      data-show-pagination-switch="true"
+                      data-sortable="true"
+                      data-show-export="true"
+                      data-click-to-select="true"
+                      data-flat="true"
+                      data-show-refresh="true"
+                      data-advanced-search="true"
+                      data-toolbar="#toolbar"
+               >
 
                     <thead>
                       <th>*</th>

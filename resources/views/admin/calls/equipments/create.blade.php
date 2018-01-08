@@ -13,16 +13,37 @@
 					<h2>Equipamentos
 					</h2>
 
-					@if($equipments->isNotEmpty())
-						<a href="{{route('call', ['id' => $call->id])}}" class="btn btn-success btn-xs pull-right">Finalizar Chamado</a>								
+					@if($call->equipment)
+						<a href="{{route('call', ['id' => $call->id])}}" class="btn btn-success btn-xs pull-right">Finalizar Chamado</a>
 					@endif
-					<a href="{{route('equipments_add', ['call' => $call->id])}}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-plus"> </i>&nbsp;Adicionar Equipamento</a>
+
+					@if(!$call->equipment)
+							<a href="{{route('equipments_add', ['call' => $call->id])}}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-plus"> </i>&nbsp;Adicionar Equipamento</a>
+					@endif
 
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
 
-					<table id="datatable-buttons" class="table table-striped table-bordered dataTable no-footer dtr-inline">
+					<table id="table"
+							class="table table-bordered table-responsive table-hover"
+							data-toggle="table"
+							data-striped="true"
+							data-search="true"
+							data-show-toggle="true"
+							data-show-columns="true"
+							data-pagination="true"
+							data-single-select="true"
+							data-maintain-selected="true"
+							data-show-pagination-switch="true"
+							data-sortable="true"
+							data-show-export="true"
+							data-click-to-select="true"
+							data-flat="true"
+							data-show-refresh="true"
+							data-advanced-search="true"
+							data-toolbar="#toolbar"
+			 >
 							<thead>
 									<th>*</th>
 									<th>Nome</th>
@@ -33,29 +54,29 @@
 									<th>Entrada</th>
 									<th>Status</th>
 								</thead>
-		
+
 								<tbody>
-									@forelse($equipments as $equipment)
+									@if($call->equipment)
 									<tr>
 										<td>
-											<a href="?remove-equipment={{$equipment->id}}" class="btn btn-danger btn-xs btn-default">Remover</a>
+											<a href="?remove-equipment={{$call->equipment->id}}" class="btn btn-danger btn-xs btn-default">Remover</a>
 										</td>
-										<td>{{$equipment->name}}</td>
-										<td>{{$equipment->brand->name}}</td>
-										<td>{{$equipment->model}}</td>
-										<td>{{$equipment->active_code}}</td>
-										<td>{{$equipment->serial}}</td>
-										<td>{{(new Datetime($equipment->date))->format('d/m/Y')}}</td>
-										<td>{{$equipment->status->name}}</td>
-		
+										<td>{{$call->equipment->name}}</td>
+										<td>{{$call->equipment->brand->name}}</td>
+										<td>{{$call->equipment->model}}</td>
+										<td>{{$call->equipment->active_code}}</td>
+										<td>{{$call->equipment->serial}}</td>
+										<td>{{(new Datetime($call->equipment->date))->format('d/m/Y')}}</td>
+										<td>{{$call->equipment->status->name}}</td>
+
 									</tr>
-									@empty
+									@else
 									<tr>
 										<td colspan="8">
 											<p>Nenhum Equipamento foi adicionado</p>
 										</td>
 									</tr>
-									@endforelse
+									@endif
 								</tbody>
 					</table>
 
@@ -102,7 +123,7 @@
 	var dataSet = [];
 
 	$('input.typeahead').bootcomplete({
-		
+
         url:'/equipments/ajax/' + $(this).val()
     });
 /*
@@ -119,7 +140,7 @@
 			}
 		});
 /*
-		
+
 
 </script>
 @endpush

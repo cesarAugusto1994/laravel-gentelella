@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Equipment;
 use App\Brand;
+use App\Models;
 use Illuminate\Support\Facades\Validator;
 use App\Status;
 use Request as Req;
@@ -21,7 +22,7 @@ class EquipmentsController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -30,7 +31,7 @@ class EquipmentsController extends Controller
     public function index()
     {
         return view('admin.equipments.index')
-        ->with('equipments', Equipment::all());   
+        ->with('equipments', Equipment::all());
     }
 
     /**
@@ -42,7 +43,8 @@ class EquipmentsController extends Controller
     {
         return view('admin.equipments.create')
         ->with('brands', Brand::all())
-        ->with('statuses', Status::all());        
+        ->with('models', Models::all())
+        ->with('statuses', Status::all());
     }
 
     /**
@@ -84,7 +86,7 @@ class EquipmentsController extends Controller
         }
 
         return redirect()->route('equipments')->with('message', 'Novo Equipamento adicionado com sucesso.');
-    
+
     }
 
     public function filterFromAjax(string $filter)
@@ -102,7 +104,7 @@ class EquipmentsController extends Controller
         $equipment->status_id = Equipment::STATUS_DISPONIVEL;
         $equipment->save();
 
-        return redirect()->route('screenings'); 
+        return redirect()->route('screenings');
     }
 
     /**
@@ -127,7 +129,7 @@ class EquipmentsController extends Controller
         return view('admin.equipments.edit')
         ->with('equipment', Equipment::find($id))
         ->with('brands', Brand::all())
-        ->with('statuses', Status::all());     
+        ->with('statuses', Status::all());
     }
 
     /**
@@ -140,7 +142,7 @@ class EquipmentsController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->request->all();
-        
+
         $validator = Validator::make($data, [
             'name' => 'required|min:2|max:255',
             'brand' => 'required',
@@ -164,7 +166,7 @@ class EquipmentsController extends Controller
         $equipment->Save();
 
         return redirect()->route('equipments')->with('message', 'Equipamento editado com sucesso.');
-    
+
     }
 
     /**

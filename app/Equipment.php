@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Brand;
 use App\Status;
+use App\Models;
 
 class Equipment extends Model
 {
@@ -13,7 +14,7 @@ class Equipment extends Model
     const STATUS_EM_USO = 3;
     const STATUS_TRIAGEM = 4;
     const STATUS_QUEBRADO = 5;
-    
+
     protected $table = 'equipments';
 
     protected $fillable = [
@@ -25,19 +26,19 @@ class Equipment extends Model
         "date",
         "status_id",
     ];
-    
+
     public function brand()
     {
-        return $this->belongsTo(Brand::class, 'brand_id');
+        return $this->belongsTo(Brand::class);
+    }
+
+    public function model()
+    {
+        return $this->belongsTo(Models::class, 'model_id');
     }
 
     public function status()
     {
-        return $this->belongsTo(Status::class, 'status_id');
-    }
-
-    public function call()
-    {
-        return $this->belongsTo(Call::class);
+        return $this->belongsTo(Status::class);
     }
 }

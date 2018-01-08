@@ -34,26 +34,50 @@
                       </div>
                     </div>
 
-                    <div class="form-group {!! $errors->has('date') ? 'has-error' : '' !!}">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Para o dia </label>
+                    <div class="form-group {!! $errors->has('external_code') ? 'has-error' : '' !!}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Chamado </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input id="date" required class="form-control col-md-7 col-xs-12 datepicker" type="text" name="date">
-                        {!! $errors->first('date', '<p class="help-block">:message</p>') !!}
+                        <input id="external_code" required class="form-control col-md-7 col-xs-12" type="text" name="external_code">
+                        {!! $errors->first('external_code', '<p class="help-block">:message</p>') !!}
                       </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group {!! $errors->has('approval_date') ? 'has-error' : '' !!}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Para o dia </label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input id="approval_date" required class="form-control col-md-7 col-xs-12 datepicker" type="text" name="approval_date">
+                        {!! $errors->first('approval_date', '<p class="help-block">:message</p>') !!}
+                      </div>
+                    </div>
+
+                    <div class="form-group  {!! $errors->has('user') ? 'has-error' : '' !!}">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Solicitante </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input readonly disabled value="{{Auth::user()->name}}" class="form-control col-md-7 col-xs-12" type="text">
+                        @if(!Auth::user()->isAdmin())
+                        <input readonly disabled value="{{Auth::user()->name}}" name="user" class="form-control col-md-7 col-xs-12" type="text">
+                        @else
+                          <select class="form-control col-md-7 col-xs-12" name="user">
+                              @foreach($users as $user)
+                                <option value="{{ $user->id }}" {{ $user->id == Auth::user()->id ? 'selected' : '' }} >{{ $user->name }}</option>
+                              @endforeach
+                          </select>
+                        @endif
+                        {!! $errors->first('user', '<p class="help-block">:message</p>') !!}
+                      </div>
+                    </div>
+
+                    <div class="form-group  {!! $errors->has('description') ? 'has-error' : '' !!}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Informe o motivo da Solicitação </label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <textarea name="description" required class="form-control col-md-7 col-xs-12"></textarea>
+                        {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
                       </div>
                     </div>
 
                     <div class="ln_solid"></div>
                     <div class="form-group">
                       <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                        <button class="btn btn-primary" type="button">Cancelar</button>
-                        <button type="submit" class="btn btn-success">Adicionar Equipamentos</button>
+                        <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i>  Adicionar Equipamentos</button>
                       </div>
                     </div>
 

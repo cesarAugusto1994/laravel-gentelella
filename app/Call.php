@@ -24,8 +24,8 @@ class Call extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function equipemnts()
+    public function equipment()
     {
-        return $this->hasMany(Equipment::class);
+        return $this->belongsTo(Equipment::class);
     }
 }

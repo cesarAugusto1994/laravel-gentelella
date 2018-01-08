@@ -19,7 +19,7 @@
                 </div>
                 <div class="x_content">
                   <br>
-                  
+
                   <form method="POST" action="{{route('equipments_store')}}" id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
                     {{csrf_field()}}
                     <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}">
@@ -45,13 +45,18 @@
                     </div>
 
                     <div class="form-group {!! $errors->has('model') ? 'has-error' : '' !!}">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Modelo <span class="required">*</span>
-                      </label>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Modelo </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="model" name="model" required="required" class="form-control col-md-7 col-xs-12">
+                        <select class="form-control" name="model" required>
+                          <option value="">Selecione um Modelo</option>
+                          @foreach($models as $model)
+                            <option value="{{$model->id}}">{{$model->name}}</option>
+                          @endforeach
+                        </select>
                         {!! $errors->first('model', '<p class="help-block">:message</p>') !!}
                       </div>
                     </div>
+
                     <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
                       <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nº Ativo </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">

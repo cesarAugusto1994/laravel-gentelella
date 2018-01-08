@@ -11,10 +11,16 @@
 			<div class="x_panel">
 				<div class="x_title">
 					<h2>Chamados - Adicionar Equipamentos </h2>
+					<a href="{{route('call', ['id' => $call->id])}}" class="btn btn-xs btn-success pull-right">Finalizar Chamado</a>
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
 					<br>
+
+							@if($message)
+								<div class="alert alert-warning">{{$message}}</div>
+							@endif
+
 					<form method="get" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
 						<div class="form-group {!! $errors->has('filter') ? 'has-error' : '' !!}">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Filtro
@@ -28,17 +34,18 @@
 						<div class="ln_solid"></div>
 						<div class="form-group">
 							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-								<button type="submit" class="btn btn-success">Pesquisar</button>
-								<a href="{{route('call', ['id' => $call->id])}}" class="btn btn-primary">Finalizar Chamado</a>								
+								<button type="submit" class="btn btn-primary">Pesquisar</button>
 							</div>
 						</div>
 
 					</form>
+
 				</div>
 			</div>
 		</div>
 	</div>
 
+@if(!$call->equipment)
 	<div class="row">
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<div class="x_panel">
@@ -54,7 +61,25 @@
 						<div class="alert alert-success">{{$message}}</div>
 					@endif
 
-					<table id="datatable-buttons" class="table table-striped table-bordered dataTable no-footer dtr-inline">
+					<table id="table"
+							class="table table-bordered table-responsive table-hover"
+							data-toggle="table"
+							data-striped="true"
+							data-search="true"
+							data-show-toggle="true"
+							data-show-columns="true"
+							data-pagination="true"
+							data-single-select="true"
+							data-maintain-selected="true"
+							data-show-pagination-switch="true"
+							data-sortable="true"
+							data-show-export="true"
+							data-click-to-select="true"
+							data-flat="true"
+							data-show-refresh="true"
+							data-advanced-search="true"
+							data-toolbar="#toolbar"
+			 >
 						<thead>
 							<th>*</th>
 							<th>Nome</th>
@@ -96,7 +121,7 @@
 		</div>
 
 	</div>
-
+@endif
 </div>
 <!-- /page content -->
 @endsection @push('scripts') @endpush

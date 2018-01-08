@@ -14,12 +14,12 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2>Status
+                  <h2>Modelos
                     </h2>
                     @if(Auth::user()->isAdmin())
-                      <a href="{{route('status_create')}}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-plus"> </i>&nbsp;Novo Status</a>
+                      <a href="{{route('models_create')}}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-plus"> </i>&nbsp;Novo Modelo</a>
                     @endif
-                      <div class="clearfix"></div>
+                    <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
 
@@ -45,13 +45,27 @@
                >
 
                     <thead>
+                        @if (Auth::user()->isAdmin())
+                          <th>*</th>
+                        @endif
                       <th>Nome</th>
                     </thead>
 
                     <tbody>
-                      @foreach($statuses as $status)
+                      @foreach($models as $model)
                           <tr>
-                            <td>{{$status->name}}</td>
+                              @if (Auth::user()->isAdmin())
+                                <td>
+                                    <div class="input-group-btn">
+                                      <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> <span class="caret"></span>
+                                      </button>
+                                      <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                            <li><a href="{{route('models_edit', ['id' => $model->id])}}">Editar</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                              @endif
+                            <td>{{$model->name}}</td>
                           </tr>
                       @endforeach
                     </tbody>
@@ -66,14 +80,3 @@
     </div>
     <!-- /page content -->
 @endsection
-
-@push('scripts')
-
-    <script>
-
-        $(document).ready(function(){
-          $('#datatable-buttons').DataTable();
-      });
-
-    </script>
-@endpush

@@ -36,62 +36,57 @@ class CallEquipmentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($call)
+    public function create($id)
     {
-    
+        $call = Call::find($id);
+
         if (Req::has('remove-equipment')) {
 
-            $callEquip = CallEquipments::where('call_id', $call)
-            ->where('equipment_id', Req::get('remove-equipment'))->first();
+           $equip = Equipment::find($call->equipment_id);
+           $equip->status_id = Equipment::STATUS_DISPONIVEL;
+           $equip->save();
 
-            $equip = Equipment::find($callEquip->equipment_id);
-            
-            $callEquip->delete();
-
-            $equip->status_id = Equipment::STATUS_DISPONIVEL; #Agendado
-            
-            $equip->save();
+           $call->equipment_id = null;
+           $call->save();
         }
 
-        $callEquipments = CallEquipments::where('call_id', $call)->get();
-
-        $equipments = $callEquipments->map(function($call) {
-            return $call->equipments;
-        });
-
         return view('admin.calls.equipments.create')
-        ->with('call', Call::find($call))
-        ->with('equipments', $equipments);
+        ->with('call', $call);
     }
 
-    public function add($call)
+    public function add($id)
     {
         $result = $filter = [];
         $message = '';
 
-        if (Req::has('add-equipment')) {
-            
+        $call = Call::find($id);
+/*
+        if ($call->equipment) {
+            $message = 'Já existe um equipamento adicionado à este Chamado.';
+        }
+*/
+        if (Req::has('add-equipment') && empty($callEquip)) {
+
             $equip = Equipment::find(Req::input('add-equipment'));
 
-            $callEquip = new CallEquipments();
-            $callEquip->call_id = $call;
-            $callEquip->equipment_id = $equip->id;
-            $callEquip->status = 'ADICIONADO';
-            $callEquip->save();
+            $call->equipment_id = $equip->id;
+            $call->save();
 
-            $equip->status_id = Equipment::STATUS_RESERVADO; #Agendado
+            $equip->status_id = Equipment::STATUS_RESERVADO;
             $equip->save();
 
             $message = "Equipamento {$equip->name} adicionado ao Chamado.";
+
+            return redirect()->route('call', ['id' => $id, 'message' => $message]);
         }
 
         if (Req::has('filter')) {
-            $equipaments = Equipment::where('name', 'like', '%' . Req::input('filter') . '%');            
+            $equipaments = Equipment::where('name', 'like', '%' . Req::input('filter') . '%');
             $result = $equipaments->where('status_id', Equipment::STATUS_DISPONIVEL)->get();
         }
 
         return view('admin.calls.equipments.add')
-        ->with('call', Call::find($call))
+        ->with('call', Call::find($id))
         ->with('equipments', $result)
         ->with('message', $message)
         ->with('filter', Req::input('filter'));
