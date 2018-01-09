@@ -9,7 +9,7 @@
 
     <!-- page content -->
     <div class="right_col" role="main">
-      
+
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
@@ -21,7 +21,7 @@
                   <br>
                   <form method="post" action="{{route('user_update', ['id' => $user->id])}}" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
                       {{csrf_field()}}
-                    
+
                     <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Nome </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
@@ -38,6 +38,7 @@
                       </div>
                     </div>
 
+                    @if(Auth::user()->isAdmin())
                     <div class="form-group {!! $errors->has('roles') ? 'has-error' : '' !!}">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Acesso </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
@@ -51,12 +52,13 @@
                         {!! $errors->first('roles', '<p class="help-block">:message</p>') !!}
                       </div>
                     </div>
+                    @endif
 
                     <div class="ln_solid"></div>
                     <div class="form-group">
                       <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                           <a href="{{route('users')}}" class="btn btn-primary" type="button">Cancelar</a>
-                          <button  data-toggle="modal" data-target="#password" class="btn btn-danger" type="button">Alterar Senha</button>                          
+                          <button  data-toggle="modal" data-target="#password" class="btn btn-danger" type="button">Alterar Senha</button>
                           <button type="submit" class="btn btn-success">Salvar</button>
                       </div>
                     </div>
@@ -79,7 +81,7 @@
                           {{csrf_field()}}
                         <div class="modal-body">
                             <div class="form-group">
-                              <label>Senha</label> 
+                              <label>Senha</label>
                               <input type="text" name="password" autofocus placeholder="Informar Senha" class="form-control">
                             </div>
                         </div>

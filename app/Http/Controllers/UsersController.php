@@ -7,11 +7,14 @@ use App\Models\User;
 use Illuminate\Validation\Validator;
 use App\Role;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class UsersController extends Controller
 {
+    const ROLE_USER = 1;
+    const ROLE_ADMIN = 2;
 
-        /**
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -28,7 +31,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return view('admin.users.index')->with('users', User::all());        
+        return view('admin.users.index')->with('users', User::all());
     }
 
     /**
@@ -38,7 +41,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create');        
+        return view('admin.users.create');
     }
 
     /**
@@ -63,7 +66,7 @@ class UsersController extends Controller
         }
 
         $roleUser = Role::where("name", $data['roles'])->first();
-        
+
         $manager = new User();
         $manager->name = $data['name'];
         $manager->email = $data['email'];
@@ -73,8 +76,8 @@ class UsersController extends Controller
 
         return redirect()
         ->route('users')
-        ->with('message', 'Novo Equipamento adicionado com sucesso.');        
-        
+        ->with('message', 'Novo Equipamento adicionado com sucesso.');
+
     }
 
     /**
@@ -98,7 +101,7 @@ class UsersController extends Controller
     {
         return view('admin.users.edit')
         ->with('roles', Role::all())
-        ->with('user', User::find($id));      
+        ->with('user', User::find($id));
     }
 
     /**
@@ -111,8 +114,12 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::find($id);
-        
+
         $data = $request->request->all();
+
+        if(!isset($data['roles'])) {
+            $data['roles'] = User::ROLE_USER;
+        }
 
         $validator = \Illuminate\Support\Facades\Validator::make($data, [
             'name' => 'required|max:255',
@@ -126,8 +133,6 @@ class UsersController extends Controller
                 ->withInput();
         }
 
-        //$user->roles()->delete();
-
         $user->name = $data['name'];
         $user->email = $data['email'];
         $user->save();
@@ -135,6 +140,10 @@ class UsersController extends Controller
         DB::table('role_user')->where('user_id', $user->id)->delete();
 
         $user->roles()->attach(Role::find($data['roles']));
+
+        if(!Auth::user()->isAdmin()) {
+            return back();
+        }
 
         return redirect()->route('users');
     }

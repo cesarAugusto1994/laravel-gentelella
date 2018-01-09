@@ -60,19 +60,12 @@
                           <tr>
                             <td>
                               @if($equipment->status->id == App\Equipment::STATUS_DISPONIVEL)
-                                <div class="input-group-btn">
-                                  <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> <span class="caret"></span>
-                                  </button>
-                                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                        <li><a href="{{route('equipment_edit', ['id' => $equipment->id])}}">Editar</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                  <a class="btn btn-xs btn-primary" href="{{route('equipment_edit', ['id' => $equipment->id])}}"><i class="fa fa-edit"></i> Editar</a>
                               @endif
                             </td>
                             <td>{{$equipment->name}}</td>
                             <td>{{$equipment->brand->name}}</td>
-                            <td>{{$equipment->model}}</td>
+                            <td>{{$equipment->models->name}}</td>
                             <td>{{$equipment->active_code}}</td>
                             <td>{{$equipment->serial}}</td>
                             <td>{{(new DateTime($equipment->date))->format('d/m/Y')}}</td>

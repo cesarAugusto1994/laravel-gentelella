@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 class BrandsController extends Controller
 {
 
-        /**
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -18,7 +18,7 @@ class BrandsController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +26,7 @@ class BrandsController extends Controller
      */
     public function index()
     {
-        return view('admin.brands.index')->with('brands', Brand::all());  
+        return view('admin.brands.index')->with('brands', Brand::all());
     }
 
     /**
@@ -36,7 +36,7 @@ class BrandsController extends Controller
      */
     public function create()
     {
-        return view('admin.brands.create');  
+        return view('admin.brands.create');
     }
 
     /**
@@ -66,7 +66,7 @@ class BrandsController extends Controller
         }
 
         Brand::create($request->request->all());
-        
+
         return redirect()->route('brands');
     }
 
@@ -89,7 +89,7 @@ class BrandsController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.brands.edit')->with('brand', Brand::find($id));  
+        return view('admin.brands.edit')->with('brand', Brand::find($id));
     }
 
     /**

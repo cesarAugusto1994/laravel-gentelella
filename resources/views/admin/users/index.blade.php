@@ -55,13 +55,7 @@
                       @foreach($users as $user)
                           <tr>
                             <td>
-                                <div class="input-group-btn">
-                                  <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> <span class="caret"></span>
-                                  </button>
-                                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                        <li><a href="{{route('user_edit', ['id' => $user->id])}}">Editar</a></li>
-                                    </ul>
-                                </div>
+                              <a class="btn btn-xs btn-primary" href="{{route('user_edit', ['id' => $user->id])}}"><i class="fa fa-edit"></i> Editar</a>
                             </td>
                             <td>{{$user->name}}</td>
                             <td>{{$user->email}}</td>

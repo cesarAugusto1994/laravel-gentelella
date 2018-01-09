@@ -33,16 +33,16 @@
                             <li><a href="#">Estoque</a></li>
                         </ul>
                     </li>
-                    <li><a><i class="fa fa-laptop"></i> Gerencial <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="{{route('brands')}}">Marcas</a></li>
-                            <li><a href="{{route('models')}}">Modelos</a></li>
-                            <li><a href="{{route('statuses')}}">Situações</a></li>
-                            <li><a href="{{route('subjects')}}">Assuntos Chamados</a></li>
-                            <li><a href="{{route('users')}}">Usuários</a></li>
-                        </ul>
-                    </li>
                     @if(Auth::user()->isAdmin())
+                      <li><a><i class="fa fa-laptop"></i> Gerencial <span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                              <li><a href="{{route('brands')}}">Marcas</a></li>
+                              <li><a href="{{route('models')}}">Modelos</a></li>
+                              <li><a href="{{route('statuses')}}">Situações</a></li>
+                              <li><a href="{{route('subjects')}}">Assuntos Chamados</a></li>
+                              <li><a href="{{route('users')}}">Usuários</a></li>
+                          </ul>
+                      </li>
                         <li><a><i class="fa fa-laptop"></i> Cadastros <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="{{route('equipments_create')}}">Equipamentos</a></li>

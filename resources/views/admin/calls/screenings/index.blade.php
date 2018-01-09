@@ -57,6 +57,7 @@
                       data-toolbar="#toolbar"
                >
                       <thead>
+                          <th>*</th>
                           <th>Nome</th>
                           <th>Marca</th>
                           <th>Modelo</th>
@@ -70,19 +71,10 @@
                           @forelse($equipments as $equipment)
                           <tr>
                             <td>
-
-                                <div class="input-group-btn">
-                                  <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> <span class="caret"></span>
-                                  </button>
-                                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                        <li>
-                                          <form action="{{route('equipment_back_to_stock', ['id' => $equipment->id])}}" method="post">
-                                            {{csrf_field()}}
-                                          <button type="submit" class="btn btn-link">Retornar Ao Estoque</button>
-                                          </form>
-                                          </li>
-                                    </ul>
-                                </div>
+                              <form action="{{route('equipment_back_to_stock', ['id' => $equipment->id])}}" method="post">
+                                {{csrf_field()}}
+                              <button type="submit" class="btn btn-success btn-xs">Retornar as Estoque</button>
+                              </form>
                             </td>
                             <td>{{$equipment->name}}</td>
                             <td>{{$equipment->brand->name}}</td>

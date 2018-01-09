@@ -13,7 +13,7 @@ use Request as Req;
 class EquipmentsController extends Controller
 {
 
-        /**
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -28,7 +28,7 @@ class EquipmentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return view('admin.equipments.index')
         ->with('equipments', Equipment::all());
@@ -40,7 +40,7 @@ class EquipmentsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {      
         return view('admin.equipments.create')
         ->with('brands', Brand::all())
         ->with('models', Models::all())
@@ -76,7 +76,7 @@ class EquipmentsController extends Controller
             $equipment = new Equipment();
             $equipment->name = $data['name'];
             $equipment->brand_id = $data['brand'];
-            $equipment->model = $data['model'];
+            $equipment->model_id = $data['model'];
             $equipment->active_code = $data['active'];
             $equipment->serial = $data['serial'];
             $equipment->date = new \DateTime('now');
@@ -129,6 +129,7 @@ class EquipmentsController extends Controller
         return view('admin.equipments.edit')
         ->with('equipment', Equipment::find($id))
         ->with('brands', Brand::all())
+        ->with('models', Models::all())
         ->with('statuses', Status::all());
     }
 

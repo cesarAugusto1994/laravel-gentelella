@@ -63,7 +63,7 @@
 										</td>
 										<td>{{$call->equipment->name}}</td>
 										<td>{{$call->equipment->brand->name}}</td>
-										<td>{{$call->equipment->model}}</td>
+										<td>{{$call->equipment->models->name}}</td>
 										<td>{{$call->equipment->active_code}}</td>
 										<td>{{$call->equipment->serial}}</td>
 										<td>{{(new Datetime($call->equipment->date))->format('d/m/Y')}}</td>

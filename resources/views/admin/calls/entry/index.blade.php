@@ -42,20 +42,29 @@
                >
 
                     <thead>
-                      <th></th>
                       <th>Assunto</th>
+                      <th>Chamado Int.</th>
+                      <th>Chamado Ext.</th>
                       <th>Equipamento</th>
+                      <th>Marca</th>
+                      <th>Modelo</th>
+                      <th>N. Série</th>
                       <th>Usuário</th>
                       <th>Data</th>
                       <th>Situação</th>
+                      <th></th>
                     </thead>
 
                     <tbody>
                       @foreach($calls as $call)
                           <tr>
-
                             <td>{{$call->subject->subject}}</td>
+                            <td>{{$call->id}}</td>
+                            <td>{{$call->external_code}}</td>
                             <td>{{$call->equipment->name}}</td>
+                            <td>{{$call->equipment->brand->name}}</td>
+                            <td>{{$call->equipment->models->name}}</td>
+                            <td>{{$call->equipment->serial}}</td>
                             <td>{{$call->user->name}}</td>
                             <td>{{(new Datetime($call->date))->format('d/m/Y')}}</td>
                             <td>{{$call->status}}</td>

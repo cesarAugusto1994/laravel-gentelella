@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use App\Call;
+use App\Equipment;
 
 class HomeController extends Controller
 {
@@ -24,10 +26,38 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-
         $request->user()->authorizeRoles(['user', 'admin']);
 
-        return view('home');
+        $calls = Call::all();
+        $equipments = Equipment::all();
+
+        $peddingCalls = $calls->filter(function($call) {
+            return $call->status == Call::STATUS_AGUARDANDO_AUTORIZACAO;
+        });
+
+        $authorizedCalls = $calls->filter(function($call) {
+            return $call->status == Call::STATUS_AUTORIZADO;
+        });
+
+        $availableEquiments = $equipments->filter(function($equipment) {
+            return $equipment->status_id == Equipment::STATUS_DISPONIVEL;
+        });
+
+        $inUseEquiments = $equipments->filter(function($equipment) {
+            return $equipment->status_id == Equipment::STATUS_EM_USO;
+        });
+
+        $screeningEquiments = $equipments->filter(function($equipment) {
+            return $equipment->status_id == Equipment::STATUS_TRIAGEM;
+        });
+
+        return view('home')
+        ->with('peddingCalls', $peddingCalls)
+        ->with('authorizedCalls', $authorizedCalls)
+        ->with('equipments', $equipments)
+        ->with('availableEquiments', $availableEquiments)
+        ->with('inUseEquiments', $inUseEquiments)
+        ->with('screeningEquiments', $screeningEquiments);
     }
 
     /*

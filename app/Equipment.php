@@ -32,7 +32,7 @@ class Equipment extends Model
         return $this->belongsTo(Brand::class);
     }
 
-    public function model()
+    public function models()
     {
         return $this->belongsTo(Models::class, 'model_id');
     }

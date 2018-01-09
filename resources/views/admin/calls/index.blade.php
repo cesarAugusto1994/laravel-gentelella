@@ -54,6 +54,8 @@
 
                     <tbody>
                       @foreach($calls as $call)
+
+                          @if($call->user->id == Auth::user()->id || Auth::user()->isAdmin())
                           <tr>
                               <td>
                                   <div class="input-group-btn">
@@ -83,6 +85,7 @@
                             <td>{{(new Datetime($call->date))->format('d/m/Y')}}</td>
                             <td>{{$call->status}}</td>
                           </tr>
+                          @endif
                       @endforeach
                     </tbody>
                   </table>

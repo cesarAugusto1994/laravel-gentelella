@@ -8,6 +8,17 @@ use Illuminate\Support\Facades\Validator;
 
 class CallSubjectsController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -37,7 +48,7 @@ class CallSubjectsController extends Controller
     public function store(Request $request)
     {
         $data = $request->request->all();
-        
+
         $validator = Validator::make($data, [
             'subject' => 'required|min:2|max:255'
         ]);

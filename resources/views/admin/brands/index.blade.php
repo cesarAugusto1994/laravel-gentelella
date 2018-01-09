@@ -56,13 +56,7 @@
                           <tr>
                               @if (Auth::user()->isAdmin())
                                 <td>
-                                    <div class="input-group-btn">
-                                      <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> <span class="caret"></span>
-                                      </button>
-                                      <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                            <li><a href="{{route('brands_edit', ['id' => $brand->id])}}">Editar</a></li>
-                                        </ul>
-                                    </div>
+                                  <a class="btn btn-xs btn-primary" href="{{route('brands_edit', ['id' => $brand->id])}}"><i class="fa fa-edit"></i> Editar</a>
                                 </td>
                               @endif
                             <td>{{$brand->name}}</td>

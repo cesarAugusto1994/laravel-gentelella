@@ -85,10 +85,12 @@ class CallsController extends Controller
                 ->withInput();
         }
 
+        $user = Auth::user()->isAdmin() ? $data['user'] : Auth::user()->id;
+
         $call = new Call();
         $call->subject_id = $data['subject'];
         $call->approval_date = \DateTime::createFromFormat('d/m/Y', $data['approval_date']);
-        $call->user_id = $data['user'];
+        $call->user_id = $user;
         $call->external_code = $data['external_code'];
         $call->description = $data['description'];
         $call->status = Call::STATUS_ABERTO;
@@ -130,15 +132,9 @@ class CallsController extends Controller
     public function cancel($id)
     {
         $call = Call::find($id);
-        $callEquipments = CallEquipments::where('call_id', $id)->get();
-
-        $equipments = $callEquipments->map(function($call) {
-            return $call->equipments;
-        });
 
         return view('admin.calls.cancel')
-        ->with('call', $call)
-        ->with('equipments', $equipments);
+        ->with('call', $call);
     }
 
     public function execute(Request $request, $id)
@@ -160,13 +156,9 @@ class CallsController extends Controller
         $call->status = Call::STATUS_DEVOLVIDO;
         $call->save();
 
-        $callEquipments = CallEquipments::where('call_id', $id)->get();
-
-        $callEquipments->map(function($call) {
-            $equipment = $call->equipments;
-            $equipment->status_id = Equipment::STATUS_TRIAGEM;
-            $equipment->save();
-        });
+        $equipment = Equipment::find($call->equipment_id);
+        $equipment->status_id = Equipment::STATUS_TRIAGEM;
+        $equipment->save();
 
         return redirect()->route('calls');
     }
@@ -179,13 +171,9 @@ class CallsController extends Controller
         $call->status = Call::STATUS_CANCELADO;
         $call->save();
 
-        $callEquipments = CallEquipments::where('call_id', $id)->get();
-
-        $callEquipments->map(function($call) {
-            $equipment = $call->equipments;
-            $equipment->status_id = Equipment::STATUS_DISPONIVEL;
-            $equipment->save();
-        });
+        $equipment = $call->equipment;
+        $equipment->status_id = Equipment::STATUS_DISPONIVEL;
+        $equipment->save();
 
         return redirect()->route('calls');
     }

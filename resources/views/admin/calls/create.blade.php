@@ -20,8 +20,7 @@
                 <div class="x_content">
                   <br>
                   <form method="post" action="{{route('calls_store')}}" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
-                      {{csrf_field()}}
-
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="form-group {!! $errors->has('subject') ? 'has-error' : '' !!}">
                       <label for="subject" class="control-label col-md-3 col-sm-3 col-xs-12">Assunto </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">

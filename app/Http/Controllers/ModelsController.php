@@ -87,7 +87,7 @@ class ModelsController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.models.edit')->with('models', Model::find($id));
+        return view('admin.models.edit')->with('model', Models::find($id));
     }
 
     /**
@@ -99,7 +99,7 @@ class ModelsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $model = Model::find($id);
+        $model = Models::find($id);
 
         $model->name = $request->request->get('name');
 
