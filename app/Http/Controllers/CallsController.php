@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Equipment;
 use App\Models\User;
+use App\Log;
 
 class CallsController extends Controller
 {
@@ -95,6 +96,11 @@ class CallsController extends Controller
         $call->description = $data['description'];
         $call->status = Call::STATUS_ABERTO;
         $call->save();
+
+        $log = new Log();
+        $log->user_id = Auth::user()->id;
+        $log->message = "Chamado n. " . $call->id . " criado.";
+        $log->save();
 
         return redirect()->route('call_equipments_create', ['id' => $call->id]);
     }

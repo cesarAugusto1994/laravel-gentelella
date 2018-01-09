@@ -47,6 +47,7 @@
                             <ul class="nav child_menu">
                                 <li><a href="{{route('equipments_create')}}">Equipamentos</a></li>
                                 <li><a href="{{route('brands_create')}}">Marcas</a></li>
+                                <li><a href="{{route('models_create')}}">Modelos</a></li>
                                 <li><a href="{{route('status_create')}}">Situações</a></li>
                                 <li><a href="{{route('subjects_create')}}">Assuntos Chamados</a></li>
                                 <li><a href="{{route('users_create')}}">Usuários</a></li>

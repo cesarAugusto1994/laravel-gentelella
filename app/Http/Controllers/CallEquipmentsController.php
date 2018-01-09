@@ -7,6 +7,8 @@ use App\Call;
 use App\CallEquipments;
 use Request as Req;
 use App\Equipment;
+use App\Log;
+use Auth;
 
 class CallEquipmentsController extends Controller
 {
@@ -75,7 +77,12 @@ class CallEquipmentsController extends Controller
             $equip->status_id = Equipment::STATUS_RESERVADO;
             $equip->save();
 
-            $message = "Equipamento {$equip->name} adicionado ao Chamado.";
+            $message = "Equipamento {$equip->name} adicionado ao Chamado de n. {$call->id}.";
+
+            $log = new Log();
+            $log->user_id = Auth::user()->id;
+            $log->message = $message;
+            $log->save();
 
             return redirect()->route('call', ['id' => $id, 'message' => $message]);
         }
