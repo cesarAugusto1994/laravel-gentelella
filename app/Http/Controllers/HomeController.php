@@ -6,6 +6,7 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Call;
 use App\Equipment;
+use App\Log;
 
 class HomeController extends Controller
 {
@@ -32,7 +33,7 @@ class HomeController extends Controller
         $equipments = Equipment::all();
 
         $peddingCalls = $calls->filter(function($call) {
-            return $call->status == Call::STATUS_AGUARDANDO_AUTORIZACAO;
+            return $call->status == Call::STATUS_AGUARDANDO_AUTORIZACAO && !empty($call->equipment);
         });
 
         $authorizedCalls = $calls->filter(function($call) {
@@ -51,10 +52,13 @@ class HomeController extends Controller
             return $equipment->status_id == Equipment::STATUS_TRIAGEM;
         });
 
+        $logs = Log::orderBy('id', 'DESC')->limit(6)->get();
+
         return view('home')
         ->with('peddingCalls', $peddingCalls)
         ->with('authorizedCalls', $authorizedCalls)
         ->with('equipments', $equipments)
+        ->with('logs', $logs)
         ->with('availableEquiments', $availableEquiments)
         ->with('inUseEquiments', $inUseEquiments)
         ->with('screeningEquiments', $screeningEquiments);

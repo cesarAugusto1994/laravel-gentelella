@@ -14,7 +14,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2> Chamado nº {{$call->id}}</h2>
+                  <h2> Chamado nº {{$call->id}} | Externo: {{ $call->external_code }}</h2>
                   @if($call->status == 'AGUARDANDO AUTORIZACAO' && Auth::user()->isAdmin())
                       <form action="{{route('call_confirm', ['id' => $call->id])}}" method="post">
                         {{csrf_field()}}

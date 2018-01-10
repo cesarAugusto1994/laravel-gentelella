@@ -40,7 +40,7 @@ class EquipmentsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {      
+    {
         return view('admin.equipments.create')
         ->with('brands', Brand::all())
         ->with('models', Models::all())
@@ -84,6 +84,11 @@ class EquipmentsController extends Controller
             $equipment->Save();
 
         }
+
+        $log = new Log();
+        $log->user_id = Auth::user()->id;
+        $log->message = "O Produto " . $data['name'] . " foi adicionado ao estoque com " . $data['qtty'] . " unidade(s).";
+        $log->save();
 
         return redirect()->route('equipments')->with('message', 'Novo Equipamento adicionado com sucesso.');
 
@@ -160,7 +165,7 @@ class EquipmentsController extends Controller
         $equipment = Equipment::find($id);
         $equipment->name = $data['name'];
         $equipment->brand_id = $data['brand'];
-        $equipment->model = $data['model'];
+        $equipment->model_id = $data['model'];
         $equipment->active_code = $data['active'];
         $equipment->serial = $data['serial'];
         $equipment->status_id = $data['status'];

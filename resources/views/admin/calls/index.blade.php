@@ -47,6 +47,12 @@
                     <thead>
                       <th></th>
                       <th>Assunto</th>
+                      <th>Chamado Int.</th>
+                      <th>Chamado Ext.</th>
+                      <th>Equipamento</th>
+                      <th>Marca</th>
+                      <th>Modelo</th>
+                      <th>N. Série</th>
                       <th>Usuário</th>
                       <th>Data</th>
                       <th>Situação</th>
@@ -58,29 +64,34 @@
                           @if($call->user->id == Auth::user()->id || Auth::user()->isAdmin())
                           <tr>
                               <td>
-                                  <div class="input-group-btn">
-
-                                    <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> <span class="caret"></span>
-                                    </button>
-
-                                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                        <li><a href="{{route('call_confirmation', ['id' => $call->id])}}">Visualizar</a>
-                                        @if($call->status == 'ABERTO' || $call->status == 'AGUARDANDO AUTORIZACAO')
-                                        <li><a href="{{route('call_equipments_create', ['call' => $call->id])}}">Editar</a>
-                                        </li>
-                                        @endif
-                                        @if($call->status == 'AGUARDANDO AUTORIZACAO' && Auth::user()->isAdmin())
-                                        <li><a href="{{route('call_confirmation', ['id' => $call->id])}}">Autorizar</a>
-                                        </li>
-                                        @endif
-                                        @if($call->status == 'ABERTO' || $call->status == 'AGUARDANDO AUTORIZACAO')
-                                        <li><a href="{{route('call_cancel', ['id' => $call->id])}}">Cancelar</a>
-                                        </li>
-                                        @endif
-                                      </ul>
-                                  </div>
+                                <div class="btn-group  btn-group-sm">
+                                  <a class="btn btn-xs btn-default" href="{{route('call_confirmation', ['id' => $call->id])}}">Visualizar</a>
+                                  @if($call->status == 'ABERTO' || $call->status == 'AGUARDANDO AUTORIZACAO')
+                                      <a class="btn btn-xs btn-default" class="btn btn-default" href="{{route('call_equipments_create', ['call' => $call->id])}}">Editar</a>
+                                  @endif
+                                  @if($call->status == 'AGUARDANDO AUTORIZACAO' && Auth::user()->isAdmin())
+                                      @if(!empty($call->equipment))
+                                          <a class="btn btn-xs btn-success" href="{{route('call_confirmation', ['id' => $call->id])}}">Autorizar</a>
+                                      @else
+                                          <button class="btn btn-success source" onclick="new PNotify({
+                                              title: 'Notificação',
+                                              text: 'Deve adicionar um equipamento para autorizar o chamado.',
+                                              styling: 'brighttheme'
+                                          });">Autorizar</button>
+                                      @endif
+                                  @endif
+                                  @if(($call->status == 'ABERTO' || $call->status == 'AGUARDANDO AUTORIZACAO') && !empty($call->equipment))
+                                      <a class="btn btn-xs btn-danger" href="{{route('call_cancel', ['id' => $call->id])}}">Cancelar</a>
+                                  @endif
+                                </div>
                               </td>
                             <td>{{$call->subject->subject}}</td>
+                            <td>{{$call->id}}</td>
+                            <td>{{$call->external_code}}</td>
+                            <td>{{ $call->equipment ? $call->equipment->name : ""}}</td>
+                            <td>{{ $call->equipment ? $call->equipment->brand->name : ""}}</td>
+                            <td>{{ $call->equipment ? $call->equipment->models->name : ""}}</td>
+                            <td>{{ $call->equipment ? $call->equipment->serial : ""}}</td>
                             <td>{{$call->user->name}}</td>
                             <td>{{(new Datetime($call->date))->format('d/m/Y')}}</td>
                             <td>{{$call->status}}</td>

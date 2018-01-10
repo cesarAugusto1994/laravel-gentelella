@@ -42,6 +42,7 @@
                >
 
                     <thead>
+                      <th></th>
                       <th>Assunto</th>
                       <th>Chamado Int.</th>
                       <th>Chamado Ext.</th>
@@ -52,12 +53,19 @@
                       <th>Usuário</th>
                       <th>Data</th>
                       <th>Situação</th>
-                      <th></th>
                     </thead>
 
                     <tbody>
                       @foreach($calls as $call)
                           <tr>
+                            <td>
+                              <div class="btn-group  btn-group-sm">
+                                <a class="btn btn-xs btn-default" href="{{route('call_confirmation', ['id' => $call->id])}}">Visualizar</a>
+                                @if($call->status == App\Call::STATUS_AUTORIZADO || $call->status == App\Call::STATUS_AGUARDANDO_AUTORIZACAO)
+                                    <a class="btn btn-xs btn-success" href="{{route('call_entry', ['id' => $call->id])}}">Iniciar Entrada</a>
+                                @endif
+                              </div>
+                            </td>
                             <td>{{$call->subject->subject}}</td>
                             <td>{{$call->id}}</td>
                             <td>{{$call->external_code}}</td>
@@ -68,12 +76,6 @@
                             <td>{{$call->user->name}}</td>
                             <td>{{(new Datetime($call->date))->format('d/m/Y')}}</td>
                             <td>{{$call->status}}</td>
-                            <td>
-                                  <a class="btn btn-xs btn-default" href="{{route('call_confirmation', ['id' => $call->id])}}">Visualizar</a>
-                                  @if($call->status == App\Call::STATUS_AUTORIZADO || $call->status == App\Call::STATUS_AGUARDANDO_AUTORIZACAO)
-                                      <a class="btn btn-xs btn-success" href="{{route('call_entry', ['id' => $call->id])}}">Iniciar Entrada</a>
-                                  @endif
-                            </td>
                           </tr>
                       @endforeach
                     </tbody>

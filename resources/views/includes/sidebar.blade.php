@@ -74,7 +74,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)">
+                        <a href="{{ route('reports') }}">
                             <i class="fa fa-file-pdf-o"></i>
                             Relatorios
                             <span class="label label-success pull-right">Em breve</span>

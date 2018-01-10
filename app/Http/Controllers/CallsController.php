@@ -32,7 +32,7 @@ class CallsController extends Controller
      */
     public function index()
     {
-        $calls = Call::all();
+        $calls = Call::orderBy('status', 'ASC')->get();
 
         return view('admin.calls.index')->with('calls', $calls);
     }
@@ -151,6 +151,13 @@ class CallsController extends Controller
         $call->status = Call::STATUS_AGUARDANDO_AUTORIZACAO;
         $call->save();
 
+        $message = "O chamado de n. " . $call->id . " está aguardando autorização.";
+
+        $log = new Log();
+        $log->user_id = Auth::user()->id;
+        $log->message = $message;
+        $log->save();
+
         return redirect()->route('calls');
     }
 
@@ -162,11 +169,18 @@ class CallsController extends Controller
         $call->status = Call::STATUS_DEVOLVIDO;
         $call->save();
 
+        $message = "O equipamento " . $call->equipment->name . " de n. " . $call->equipment->id . " foi adicionado à Triagem.";
+
+        $log = new Log();
+        $log->user_id = Auth::user()->id;
+        $log->message = $message;
+        $log->save();
+
         $equipment = Equipment::find($call->equipment_id);
         $equipment->status_id = Equipment::STATUS_TRIAGEM;
         $equipment->save();
 
-        return redirect()->route('calls');
+        return redirect()->route('calls')->with('message', $message);
     }
 
     public function cancelConfirm(Request $request, $id)
@@ -176,6 +190,13 @@ class CallsController extends Controller
         $call = Call::find($id);
         $call->status = Call::STATUS_CANCELADO;
         $call->save();
+
+        $message = "O chamado de n. " . $call->id . " foi cancelado por " . Auth::user()->name;
+
+        $log = new Log();
+        $log->user_id = Auth::user()->id;
+        $log->message = $message;
+        $log->save();
 
         $equipment = $call->equipment;
         $equipment->status_id = Equipment::STATUS_DISPONIVEL;
@@ -190,11 +211,19 @@ class CallsController extends Controller
 
         $call = Call::find($id);
         $call->status = Call::STATUS_AUTORIZADO;
+        $call->approver_id = Auth::user()->id;
         $call->save();
 
         if(!$call->equipment_id) {
             throw new Exception('Equipamento não informado.');
         }
+
+        $message = "O chamado de n. " . $call->id . " foi aprovado por " . Auth::user()->name;
+
+        $log = new Log();
+        $log->user_id = Auth::user()->id;
+        $log->message = $message;
+        $log->save();
 
         $equipment = Equipment::find($call->equipment_id);
         $equipment->status_id = Equipment::STATUS_EM_USO;

@@ -84,5 +84,5 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/screenings', 'CallsController@screenings')->name('screenings');
 
-
+    Route::get('/reports', 'ReportsController@index')->name('reports');
 });

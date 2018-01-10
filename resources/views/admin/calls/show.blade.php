@@ -14,7 +14,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2> Chamado {{$call->id}}</h2>
+                  <h2> Chamado {{$call->id}} | Externo: {{ $call->external_code }}</h2>
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
@@ -23,7 +23,7 @@
                   Solicirado por: {{ $call->user->name }}
                   <form action="{{route('call_confirm', ['id' => $call->id])}}" method="post">
                     {{csrf_field()}}
-                  <button type="submit" class="btn btn-success pull-right"><i class="fa fa-check"> </i>&nbsp;Autorizar Chamado</a>                  
+                  <button type="submit" class="btn btn-success pull-right"><i class="fa fa-check"> </i>&nbsp;Autorizar Chamado</a>
                   </form>
                 </div>
               </div>
@@ -40,7 +40,7 @@
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-        
+
                   <table id="datatable-buttons" class="table table-striped table-bordered dataTable no-footer dtr-inline">
                       <thead>
                           <th>Nome</th>
@@ -51,7 +51,7 @@
                           <th>Entrada</th>
                           <th>Status</th>
                         </thead>
-            
+
                         <tbody>
                           @forelse($equipments as $equipment)
                           <tr>
@@ -62,7 +62,7 @@
                             <td>{{$equipment->serial}}</td>
                             <td>{{(new DateTime($equipment->date))->format('d/m/Y')}}</td>
                             <td>{{$equipment->status->name}}</td>
-            
+
                           </tr>
                           @empty
                           <tr>
@@ -73,11 +73,11 @@
                           @endforelse
                         </tbody>
                   </table>
-        
+
                 </div>
               </div>
             </div>
-  
+
           </div>
 
 

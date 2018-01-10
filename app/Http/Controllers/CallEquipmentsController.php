@@ -52,6 +52,10 @@ class CallEquipmentsController extends Controller
            $call->save();
         }
 
+        if(empty($call->equipment_id)) {
+            return redirect()->route('equipments_add', ['call' => $call->id]);
+        }
+
         return view('admin.calls.equipments.create')
         ->with('call', $call);
     }
@@ -88,7 +92,12 @@ class CallEquipmentsController extends Controller
         }
 
         if (Req::has('filter')) {
-            $equipaments = Equipment::where('name', 'like', '%' . Req::input('filter') . '%');
+            $filterStr =  '%' . Req::input('filter') . '%';
+            $filter = Req::input('filter');
+            $equipaments = Equipment::where('name', 'like', $filterStr)
+            ->orWhere('id', $filter)
+            ->orWhere('serial', $filter)
+            ->orWhere('active_code', $filter);
             $result = $equipaments->where('status_id', Equipment::STATUS_DISPONIVEL)->get();
         }
 

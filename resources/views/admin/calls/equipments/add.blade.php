@@ -11,7 +11,9 @@
 			<div class="x_panel">
 				<div class="x_title">
 					<h2>Chamados - Adicionar Equipamentos </h2>
-					<a href="{{route('call', ['id' => $call->id])}}" class="btn btn-xs btn-success pull-right">Finalizar Chamado</a>
+					@if(!empty($equipments))
+							<a href="{{route('call', ['id' => $call->id])}}" class="btn btn-xs btn-success pull-right">Finalizar Chamado</a>
+					@endif
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
@@ -102,7 +104,7 @@
 								<td>{{$equipment->model}}</td>
 								<td>{{$equipment->active_code}}</td>
 								<td>{{$equipment->serial}}</td>
-								<td>{{$equipment->date}}</td>
+								<td>{{(new Datetime($equipment->date))->format('d/m/Y')}}</td>
 								<td>{{$equipment->status->name}}</td>
 
 							</tr>

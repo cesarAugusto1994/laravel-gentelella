@@ -18,6 +18,8 @@
         <!-- Custom Theme Style -->
         <link href="{{ asset("css/gentelella.min.css") }}" rel="stylesheet">
 
+        <link href="{{ asset("css/pnotify.custom.min.css") }}" rel="stylesheet">
+
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css"/>
 
@@ -51,6 +53,8 @@
         <!-- Custom Theme Scripts -->
         <script src="{{ asset("js/gentelella.min.js") }}"></script>
 
+        <script src="{{ asset("js/pnotify.custom.min.js") }}"></script>
+
         <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 
@@ -82,9 +86,15 @@
                         });
                     });
                 })
+
+                $('.ui-pnotify').remove();
             });
         </script>
         @stack('scripts')
+
+        <script>
+
+        </script>
 
     </body>
 </html>

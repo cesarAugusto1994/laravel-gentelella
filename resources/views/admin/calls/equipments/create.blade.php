@@ -43,6 +43,7 @@
 							data-show-refresh="true"
 							data-advanced-search="true"
 							data-toolbar="#toolbar"
+							data-sortable="true"
 			 >
 							<thead>
 									<th>*</th>
