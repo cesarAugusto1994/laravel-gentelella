@@ -7,17 +7,19 @@ use App\Report;
 use App\Queries;
 use Illuminate\Support\Facades\Validator;
 
-class ReportsController extends Controller
+class QueriesController extends Controller
 {
+
     /**
-    * Create a new controller instance.
-    *
-    * @return void
-    */
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
-      $this->middleware('auth');
+        $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,8 +27,7 @@ class ReportsController extends Controller
      */
     public function index()
     {
-        return view('admin.reports.index')
-        ->with('reports', Report::all());
+        //
     }
 
     /**
@@ -36,7 +37,8 @@ class ReportsController extends Controller
      */
     public function create()
     {
-        return view('admin.reports.create');
+        return view('admin.queries.create')
+        ->with('reports', Report::all());
     }
 
     /**
@@ -47,27 +49,31 @@ class ReportsController extends Controller
      */
     public function store(Request $request)
     {
-        $name = $request->request->get('name');
+        $data = $request->request->all();
 
-        $validator = Validator::make(['name' => $name], [
-            'name' => 'required|min:2|max:255|unique:reports'
+        $validator = Validator::make($data, [
+            'name' => 'required|min:2|max:255|unique:queries',
+            'link' => 'required|min:2|max:255',
+            'report' => 'required'
         ]);
 
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
 
-        $someName = Report::where('name', $name)->get();
+        $someName = Queries::where('name', $data['name'])->get();
 
-        if (count($someName) > 0) {
+        if ($someName->isNotEmpty()) {
             return back()->withInput();
         }
 
-        $report = new Report();
-        $report->name = $name;
-        $report->save();
+        $query = new Queries();
+        $query->name = $data['name'];
+        $query->link = $data['link'];
+        $query->report_id = $data['report'];
+        $query->save();
 
-        return redirect()->route('reports');
+        return redirect()->route('report', ['id' => $data['report']]);
     }
 
     /**
@@ -78,9 +84,13 @@ class ReportsController extends Controller
      */
     public function show($id)
     {
-        return view('admin.reports.show')
-        ->with('report', Report::find($id))
-        ->with('queries', Queries::where('report_id', $id)->get());
+        //
+    }
+
+    public function run($id)
+    {
+        return view('admin.run.index')
+            ->with('query', Queries::find($id));
     }
 
     /**

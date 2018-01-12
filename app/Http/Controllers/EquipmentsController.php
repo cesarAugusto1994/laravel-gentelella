@@ -8,6 +8,8 @@ use App\Brand;
 use App\Models;
 use Illuminate\Support\Facades\Validator;
 use App\Status;
+use App\Log;
+use Auth;
 use Request as Req;
 
 class EquipmentsController extends Controller

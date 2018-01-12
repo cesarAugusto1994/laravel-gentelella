@@ -62,14 +62,21 @@
 
                   <table class="tile_info">
                     <tbody>
-                        @foreach($inUseEquiments as $equipment)
+                        @forelse($inUseEquiments as $equipment)
                           <tr>
                               <td>
                                 <p><i class="fa fa-square green"></i><a href="{{ route('equipments', $equipment->id ) }}">{{ $equipment->name }}</a></p>
                               </td>
                               <td>{{ $equipment->brand->name }}</td>
                           </tr>
-                        @endforeach
+
+                        @empty
+
+                        <tr>
+                            <td>Nenhum Equipamento se encontra em uso.</td>
+                        </tr>
+
+                        @endforelse
                   </tbody></table>
 
                 </div>
@@ -90,14 +97,18 @@
 
                   <table class="tile_info">
                     <tbody>
-                        @foreach($inUseEquiments as $equipment)
+                        @forelse($inUseEquiments as $equipment)
                           <tr>
                               <td>
                                 <p><i class="fa fa-square cyan"></i><a href="{{ route('equipments', $equipment->id ) }}">{{ $equipment->name }}</a></p>
                               </td>
                               <td>{{ $equipment->brand->name }}</td>
                           </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td>Nenhum Equipamento se encontra em uso.</td>
+                            </tr>
+                        @endforelse
                   </tbody></table>
 
                 </div>
@@ -118,14 +129,18 @@
                 <div class="x_content">
                   <table class="tile_info">
                     <tbody>
-                        @foreach($peddingCalls as $call)
+                        @forelse($peddingCalls as $call)
                           <tr>
                               <td>
                                 <p><i class="fa fa-square blue"></i><a href="{{ route('equipments', $call->equipment->id ) }}">{{ $call->equipment->name }}</a></p>
                               </td>
                               <td><a href="{{ route('call', $call->id ) }}">n. {{ $call->id }}</a></td>
                           </tr>
-                        @endforeach
+                          @empty
+                              <tr>
+                                  <td>Nenhum Equipamento se encontra em uso.</td>
+                              </tr>
+                          @endforelse
                   </tbody></table>
                 </div>
               </div>
@@ -147,7 +162,7 @@
                   <div class="dashboard-widget-content">
 
                     <ul class="list-unstyled timeline widget">
-                      @foreach($logs as $log)
+                      @forelse($logs as $log)
                       <li>
                         <div class="block">
                           <div class="block_content">
@@ -159,7 +174,9 @@
                           </div>
                         </div>
                       </li>
-                      @endforeach
+                      @empty
+                          <li>Nenhum Log foi registrado até o momento.</li>
+                      @endforelse
                     </ul>
                   </div>
                 </div>

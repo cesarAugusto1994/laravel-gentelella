@@ -16,20 +16,25 @@
                 <div class="x_title">
                   <h2>Relatorios
                     </h2>
+                    @if(Auth::user()->isAdmin())
+                      <a href="{{route('report_create')}}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-plus"> </i>&nbsp;Novo Relatório</a>
+                    @endif
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
 
                   <div class="row">
-                    <a href="#">
-                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <div class="tile-stats">
-                          <div class="icon"><i class="fa fa-box"></i>
-                          </div>
-                          <div class="count text-center">Estoque</div>
-                        </div>
-                      </div>
-                    </a>
+                    @foreach($reports as $report)
+                        <a href="{{ route('report', ['id' => $report->id]) }}">
+                            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="tile-stats">
+                                  <div class="icon"><i class="fa fa-box"></i>
+                                  </div>
+                                  <div class="count text-center">{{ $report->name }}</div>
+                                </div>
+                            </div>
+                        </a>
+                    @endforeach
                 </div>
 
               </div>

@@ -85,4 +85,14 @@ Route::prefix('admin')->group(function () {
     Route::get('/screenings', 'CallsController@screenings')->name('screenings');
 
     Route::get('/reports', 'ReportsController@index')->name('reports');
+    Route::get('/report/{id}', 'ReportsController@show')->name('report');
+    Route::get('/reports/create', 'ReportsController@create')->name('report_create');
+
+    Route::post('/reports/store', 'ReportsController@store')->name('report_store');
+
+    Route::get('/queries/create', 'QueriesController@create')->name('query_create');
+    Route::post('/queries/store', 'QueriesController@store')->name('query_store');
+
+    Route::get('/query/{id}/run', 'QueriesController@run')->name('query_run');
+
 });
