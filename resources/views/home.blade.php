@@ -106,7 +106,7 @@
                           </tr>
                         @empty
                             <tr>
-                                <td>Nenhum Equipamento se encontra em uso.</td>
+                                <td>Nenhum Equipamento se encontra em triagem.</td>
                             </tr>
                         @endforelse
                   </tbody></table>
@@ -138,7 +138,7 @@
                           </tr>
                           @empty
                               <tr>
-                                  <td>Nenhum Equipamento se encontra em uso.</td>
+                                  <td>Nenhum Equipamento se encontra reservado.</td>
                               </tr>
                           @endforelse
                   </tbody></table>
