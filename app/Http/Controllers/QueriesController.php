@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Report;
 use App\Queries;
+use App\Status;
+use App\Equipment;
 use Illuminate\Support\Facades\Validator;
 
 class QueriesController extends Controller
@@ -126,4 +128,29 @@ class QueriesController extends Controller
     {
         //
     }
+
+    public function getReportFromStatus($id)
+    {
+        return view('admin.reports.queries.status')
+            ->with('status', Status::find($id));
+    }
+
+    public function getReportGrouping($group)
+    {
+
+        $brands = Brands::all();
+
+        $models = Models::all();
+
+        //$equipments = Equipment::groupBy($group);
+
+        /*
+        return view('admin.reports.queries.group')
+            ->with('brands', $brands)
+            ->with('models', $models)
+            ->with('group', 'Marca e Modelos');
+            */
+    }
+
+    
 }

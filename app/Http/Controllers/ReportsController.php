@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Report;
 use App\Queries;
+use App\Status;
 use Illuminate\Support\Facades\Validator;
 
 class ReportsController extends Controller
@@ -26,7 +27,8 @@ class ReportsController extends Controller
     public function index()
     {
         return view('admin.reports.index')
-        ->with('reports', Report::all());
+        ->with('reports', Report::all())
+        ->with('statuses', Status::all());
     }
 
     /**

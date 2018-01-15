@@ -30,7 +30,6 @@
                             <li>
                                 <a href="{{route('equipments')}}">Listagem</a>
                             </li>
-                            <li><a href="#">Estoque</a></li>
                         </ul>
                     </li>
                     @if(Auth::user()->isAdmin())

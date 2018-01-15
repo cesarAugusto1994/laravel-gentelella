@@ -95,4 +95,10 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/query/{id}/run', 'QueriesController@run')->name('query_run');
 
+    Route::get('/reports/equipments/status/{id}', 'QueriesController@getReportFromStatus')->name('report_equipmennts_from_status');
+
+    Route::get('/reports/equipments/groupingby/{group}', 'QueriesController@getReportGrouping')->name('report_equipmennts_grouping');
+    
+
+    
 });

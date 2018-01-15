@@ -14,32 +14,60 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2>Relatorios
+                  <h2>Relatorios de Equipamentos
                     </h2>
-                    @if(Auth::user()->isAdmin())
-                      <a href="{{route('report_create')}}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-plus"> </i>&nbsp;Novo Relatório</a>
-                    @endif
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
 
                   <div class="row">
-                    @foreach($reports as $report)
-                        <a href="{{ route('report', ['id' => $report->id]) }}">
-                            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                <div class="tile-stats">
-                                  <div class="icon"><i class="fa fa-box"></i>
-                                  </div>
-                                  <div class="count text-center">{{ $report->name }}</div>
-                                </div>
+                        
+                    @foreach($statuses as $status)
+                    <a href="{{ route('report_equipmennts_from_status', ['id' => $status->id]) }}">
+                        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="tile-stats">
+                              <div class="icon"><i class="fa fa-box"></i>
+                              </div>
+                              <div class="count text-center">{{ $status->name }} <span class="tag">{{ count($status->equipments) }}</span></div>
                             </div>
-                        </a>
+                        </div>
+                    </a>
                     @endforeach
+
                 </div>
 
               </div>
             </div>
           </div>
+
+
+          <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Relatorios de Estoque
+                      </h2>
+                      <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+  
+                    <div class="row">
+                          
+                      <a href="{{ route('report_equipmennts_grouping', ['group' => 'brand_id']) }}">
+                          <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                              <div class="tile-stats">
+                                <div class="icon"><i class="fa fa-box"></i>
+                                </div>
+                                <div class="count text-center">Por Marca </div>
+                              </div>
+                          </div>
+                      </a>
+  
+                  </div>
+  
+                </div>
+              </div>
+            </div>
     </div>
 
   </div>
