@@ -139,18 +139,39 @@ class QueriesController extends Controller
 
     public function getReportGrouping($group)
     {
-        $brands = Brand::all();
+        $equipments = Equipment::all();
 
-        $models = Models::all();
+        $result = [];
 
-        //$equipments = Equipment::groupBy($group);
+        foreach ($equipments->toArray() as $key => $equip) {
 
-        /*
+            $model = Models::find($equip['model_id']);
+
+            $k = $equip['name'] . ':' . $equip['model_id'];
+            $k2 = $equip['name'];
+
+            if(!isset($result[$k2])) {
+                $result[$k2]['qtty'] = 0;
+            }
+
+            if(!isset($result[$k])) {
+                $result[$k]['qtty'] = 0;
+            }
+
+            $result[$k]['name'] = $model->name;
+            $result[$k2]['name'] = $equip['name'];
+
+            $result[$k]['isModel'] = true;
+            $result[$k2]['isModel'] = false;
+
+            $result[$k2]['qtty']++;
+            $result[$k]['qtty']++;
+        }
+
         return view('admin.reports.queries.group')
-            ->with('brands', $brands)
-            ->with('models', $models)
-            ->with('group', 'Marca e Modelos');
-            */
+            ->with('result', $result)
+            ->with('total', array_sum(array_column($result, 'qtty'))/2);
+
     }
 
 

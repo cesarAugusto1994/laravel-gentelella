@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Report;
 use App\Queries;
 use App\Status;
+use App\Equipment;
 use Illuminate\Support\Facades\Validator;
 
 class ReportsController extends Controller
@@ -28,7 +29,8 @@ class ReportsController extends Controller
     {
         return view('admin.reports.index')
         ->with('reports', Report::all())
-        ->with('statuses', Status::all());
+        ->with('statuses', Status::all())
+        ->with('equipments', Equipment::all());
     }
 
     /**

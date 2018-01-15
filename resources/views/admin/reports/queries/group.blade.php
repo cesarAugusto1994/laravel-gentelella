@@ -14,12 +14,11 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2>Relatório de Estoque Agrupado por ({{ $group }})
+                  <h2>Relatório de Estoque Agrupado por Produto e Modelo
                     </h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-
 
                   <table id="table"
                       class="table table-bordered table-responsive table-hover"
@@ -43,32 +42,27 @@
 
                     <thead>
                       <th>Nome</th>
-                      <th>Marca</th>
-                      <th>Modelo</th>
-                      <th>Ativo</th>
-                      <th>Série</th>
-                      <th>Entrada</th>
-                      <th>Status</th>
+                      <th>Quantidade</th>
                     </thead>
 
                     <tbody>
-                      @forelse($equipments as $equipment)
+                      @forelse($result as $item)
                           <tr>
-                            <td>{{$equipment->name}}</td>
-                            <td>{{$equipment->brand->name}}</td>
-                            <td>{{$equipment->models->name}}</td>
-                            <td>{{$equipment->active_code}}</td>
-                            <td>{{$equipment->serial}}</td>
-                            <td>{{(new DateTime($equipment->date))->format('d/m/Y')}}</td>
-                            <td>{{$equipment->status->name}}</td>
-
+                            <td><p {{ !$item['isModel'] ? 'class=text-danger' : "" }}>{{$item['name']}}</p></td>
+                            <td>{{$item['qtty']}}</td>
                           </tr>
                       @empty
                           <tr>
-                              <p>Nenhum Equipamento foi adicionado</p>
-                            </tr>
+                            <td colspan="2"><p>Nenhum Equipamento foi adicionado</p></td>
+                          </tr>
                       @endforelse
                     </tbody>
+                    <tfoot>
+                      <tr>
+                        <td><b>Total: </b></td>
+                        <td>{{ $total }}</td>
+                      </tr>
+                    </tfoot>
                   </table>
 
                 </div>
