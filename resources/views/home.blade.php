@@ -28,7 +28,7 @@
           </div>
           <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"> Equipamentos em Triagem</span>
-            <div class="count">{{ count($screeningEquiments) }}</div>
+            <div class="count">{{ count($screeningEquipments) }}</div>
             <span class="count_bottom"></span>
           </div>
           <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
@@ -97,7 +97,7 @@
 
                   <table class="tile_info">
                     <tbody>
-                        @forelse($inUseEquiments as $equipment)
+                        @forelse($screeningEquipments as $equipment)
                           <tr>
                               <td>
                                 <p><i class="fa fa-square cyan"></i><a href="{{ route('equipments', $equipment->id ) }}">{{ $equipment->name }}</a></p>
@@ -130,12 +130,12 @@
                   <table class="tile_info">
                     <tbody>
                         @forelse($peddingCalls as $call)
-                          <tr>
-                              <td>
-                                <p><i class="fa fa-square blue"></i><a href="{{ route('equipments', $call->equipment->id ) }}">{{ $call->equipment->name }}</a></p>
-                              </td>
-                              <td><a href="{{ route('call', $call->id ) }}">n. {{ $call->id }}</a></td>
-                          </tr>
+                              <tr>
+                                  <td>
+                                    <p><i class="fa fa-square blue"></i><a href="{{ route('equipments', $call->equipment->id ) }}">{{ $call->equipment->name }}</a></p>
+                                  </td>
+                                  <td><a href="{{ route('call', $call->id ) }}">n. {{ $call->id }}</a></td>
+                              </tr>
                           @empty
                               <tr>
                                   <td>Nenhum Equipamento se encontra reservado.</td>

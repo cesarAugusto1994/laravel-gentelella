@@ -48,7 +48,7 @@ class HomeController extends Controller
             return $equipment->status_id == Equipment::STATUS_EM_USO;
         });
 
-        $screeningEquiments = $equipments->filter(function($equipment) {
+        $screeningEquipments = $equipments->filter(function($equipment) {
             return $equipment->status_id == Equipment::STATUS_TRIAGEM;
         });
 
@@ -61,7 +61,7 @@ class HomeController extends Controller
         ->with('logs', $logs)
         ->with('availableEquiments', $availableEquiments)
         ->with('inUseEquiments', $inUseEquiments)
-        ->with('screeningEquiments', $screeningEquiments);
+        ->with('screeningEquipments', $screeningEquipments);
     }
 
     /*
