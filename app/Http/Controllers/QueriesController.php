@@ -7,6 +7,8 @@ use App\Report;
 use App\Queries;
 use App\Status;
 use App\Equipment;
+use App\Brand;
+use App\Models;
 use Illuminate\Support\Facades\Validator;
 
 class QueriesController extends Controller
@@ -137,8 +139,7 @@ class QueriesController extends Controller
 
     public function getReportGrouping($group)
     {
-
-        $brands = Brands::all();
+        $brands = Brand::all();
 
         $models = Models::all();
 
@@ -152,5 +153,5 @@ class QueriesController extends Controller
             */
     }
 
-    
+
 }
