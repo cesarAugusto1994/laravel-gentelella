@@ -22,8 +22,8 @@
             <span class="count_bottom"></span>
           </div>
           <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-            <span class="count_top"> Equipamentos Em Uso</span>
-            <div class="count green">{{ count($inUseEquiments) }}</div>
+            <span class="count_top"> Equipamentos Reservados</span>
+            <div class="count green">{{ count($peddingCalls) }}</div>
             <span class="count_bottom"></span>
           </div>
           <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
@@ -46,10 +46,10 @@
         <div class="row">
 
 
-            <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
               <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
-                  <h2>Em Uso</h2>
+                  <h2>Disponíveis</h2>
                   <ul class="nav navbar-right panel_toolbox">
                     <li></li>
                     <li></li>
@@ -62,7 +62,7 @@
 
                   <table class="tile_info">
                     <tbody>
-                        @forelse($inUseEquiments as $equipment)
+                        @forelse($availableEquiments->take(8) as $equipment)
                           <tr>
                               <td>
                                 <p><i class="fa fa-square green"></i><a href="{{ route('equipments', $equipment->id ) }}">{{ $equipment->name }}</a></p>
@@ -73,7 +73,7 @@
                         @empty
 
                         <tr>
-                            <td>Nenhum Equipamento se encontra em uso.</td>
+                            <td>Nenhum Equipamento se encontra dispinível.</td>
                         </tr>
 
                         @endforelse
@@ -83,7 +83,7 @@
               </div>
             </div>
 
-            <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
               <div class="x_panel tile fixed_height_320 overflow_hidden">
                 <div class="x_title">
                   <h2>Triagem</h2>
@@ -115,8 +115,7 @@
               </div>
             </div>
 
-
-            <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
               <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
                   <h2>Reservados</h2>
@@ -139,6 +138,36 @@
                           @empty
                               <tr>
                                   <td>Nenhum Equipamento se encontra reservado.</td>
+                              </tr>
+                          @endforelse
+                  </tbody></table>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+              <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                  <h2>Descarte</h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <table class="tile_info">
+                    <tbody>
+                        @forelse($peddingCalls as $call)
+                              <tr>
+                                  <td>
+                                    <p><i class="fa fa-square blue"></i><a href="{{ route('equipments', $call->equipment->id ) }}">{{ $call->equipment->name }}</a></p>
+                                  </td>
+                                  <td><a href="{{ route('call', $call->id ) }}">n. {{ $call->id }}</a></td>
+                              </tr>
+                          @empty
+                              <tr>
+                                  <td>Nenhum Equipamento se encontra descartado.</td>
                               </tr>
                           @endforelse
                   </tbody></table>
