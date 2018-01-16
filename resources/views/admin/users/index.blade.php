@@ -110,15 +110,7 @@
 
                   $.post(url_remove, { id: $id, _token : "{{ csrf_token() }}" }).then((data) => {
 
-                    if (data.code > 0) {
-                      label = data.code == 200 ? 'Sucesso' : 'Erro';
-
-                      swal(
-                        label,
-                        data.message,
-                        data.class
-                      )
-                    }
+                      window.location.reload();
 
                   })
 

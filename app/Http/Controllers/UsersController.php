@@ -55,8 +55,8 @@ class UsersController extends Controller
         $data = $request->request->all();
 
         $validator = \Illuminate\Support\Facades\Validator::make($data, [
-			'name' => 'required|max:255',
-			'email' => 'required|email|max:255|unique:users',
+      			'name' => 'required|max:255',
+      			'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
             'roles' => 'required',
         ]);
@@ -185,7 +185,6 @@ class UsersController extends Controller
 
           $user = User::findOrFail($id);
           $user->active = false;
-          $user->password = Hash::make('inactive');
           $user->save();
 
           return json_encode([
