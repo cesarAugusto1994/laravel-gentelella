@@ -35,7 +35,7 @@
                     @if(Auth::user()->isAdmin())
                       <li><a><i class="fa fa-laptop"></i> Gerencial <span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu">
-                              <li><a href="{{route('brands')}}">Marcas</a></li>
+                              <li><a href="{{route('warehouses')}}">Estoques</a></li>
                               <li><a href="{{route('models')}}">Modelos</a></li>
                               <li><a href="{{route('statuses')}}">Situações</a></li>
                               <li><a href="{{route('subjects')}}">Assuntos Chamados</a></li>
@@ -45,7 +45,7 @@
                         <li><a><i class="fa fa-laptop"></i> Cadastros <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="{{route('equipments_create')}}">Equipamentos</a></li>
-                                <li><a href="{{route('brands_create')}}">Marcas</a></li>
+                                <li><a href="{{route('warehouses_create')}}">Estoques</a></li>
                                 <li><a href="{{route('models_create')}}">Modelos</a></li>
                                 <li><a href="{{route('status_create')}}">Situações</a></li>
                                 <li><a href="{{route('subjects_create')}}">Assuntos Chamados</a></li>
@@ -87,7 +87,7 @@
 
         <!-- /menu footer buttons -->
         <div class="sidebar-footer hidden-small">
-          
+
         </div>
         <!-- /menu footer buttons -->
     </div>

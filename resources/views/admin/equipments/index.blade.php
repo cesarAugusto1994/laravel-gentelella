@@ -45,9 +45,8 @@
                >
 
                     <thead>
-                      <th>*</th>
                       <th>Nome</th>
-                      <th>Marca</th>
+                      <th>Estoque</th>
                       <th>Modelo</th>
                       <th>Ativo</th>
                       <th>Série</th>
@@ -57,20 +56,18 @@
 
                     <tbody>
                       @forelse($equipments as $equipment)
-                          <tr>
-                            <td>
-                              @if($equipment->status->id == App\Equipment::STATUS_DISPONIVEL)
-                                  <a class="btn btn-xs btn-primary" href="{{route('equipment_edit', ['id' => $equipment->id])}}"><i class="fa fa-edit"></i> Editar</a>
-                              @endif
-                            </td>
+                          <tr data-urledit="{{route('equipment_edit', ['id' => $equipment->id])}}"
+                            @if($equipment->status->id == App\Equipment::STATUS_DISPONIVEL)
+                                data-urldescart="{{route('equipment_descart', ['id' => $equipment->id])}}"
+                            @endif
+                            >
                             <td>{{$equipment->name}}</td>
-                            <td>{{$equipment->brand->name}}</td>
+                            <td>{{$equipment->warehouse->name}}</td>
                             <td>{{$equipment->models->name}}</td>
                             <td>{{$equipment->active_code}}</td>
                             <td>{{$equipment->serial}}</td>
                             <td>{{(new DateTime($equipment->date))->format('d/m/Y')}}</td>
                             <td>{{$equipment->status->name}}</td>
-
                           </tr>
                       @empty
                           <tr>
@@ -92,11 +89,85 @@
 
 @push('scripts')
 
-    <script>
+<script>
 
-        $(document).ready(function(){
-          $('#datatable-buttons').DataTable();
-      });
+    $('#table').on('click-row.bs.table', function (e, value, row, index) {
+        const $id = value._data.field;
+        const url_edit = value._data.urledit;
+        const url_remove = value._data.urlremove;
+        const url_descart = value._data.urldescart;
 
-    </script>
+        const selfRow = row;
+
+        $('.modal-body > p').html('');
+        $('.modal-body > p').append(value[0]);
+
+        $('#btn-edit').attr('href', url_edit);
+
+        $('#btn-remove').hide();
+        $('#btn-descart').hide();
+
+        @if (Auth::user()->isAdmin())
+            $('.modal-options').modal('show');
+        @endif
+
+        if(url_descart) {
+            $('#btn-descart').attr('href', url_descart).show();
+        }
+
+        $('#btn-remove').click(function(e) {
+
+            swal({
+                title: 'Deseja realmente Inativar?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim'
+                }).then((result) => {
+                if (result.value) {
+
+                  $.post(url_remove, { id: $id, _token : "{{ csrf_token() }}" }).then((data) => {
+
+                    if (data.code > 0) {
+                      label = data.code == 200 ? 'Sucesso' : 'Erro';
+
+                      swal(
+                        label,
+                        data.message,
+                        data.class
+                      )
+                    }
+
+                  })
+
+                  selfRow.hide();
+
+                }
+            })
+
+        });
+
+        $('#btn-descart').click(function(e) {
+
+            swal({
+                title: 'Deseja realmente  este Equipamento?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim'
+                }).then((result) => {
+                if (result.value) {
+
+                    window.location.href = url_descart;
+
+                }
+            })
+
+        });
+    });
+
+</script>
+
 @endpush

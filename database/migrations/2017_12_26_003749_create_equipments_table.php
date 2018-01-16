@@ -16,7 +16,8 @@ class CreateEquipmentsTable extends Migration
         Schema::create('equipments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('brand_id');
+            $table->integer('warehouse_id')->unsigned();
+            $table->foreign('warehouse_id')->references('id')->on('warehouses');
             $table->string('active_code');
             $table->string('serial');
             $table->date('date');

@@ -116,6 +116,22 @@ class ModelsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+
+          $model = Models::findOrFail($id);
+
+          $model->delete();
+
+          return json_encode([
+            'message' => 'Modelo Inativado com Sucesso.',
+            'class' => 'success'
+          ], 200);
+
+        } catch(Exception $e) {
+            return json_encode([
+              'message' => $e->getMessage(),
+              'class' => 'error'
+            ]);
+        }
     }
 }

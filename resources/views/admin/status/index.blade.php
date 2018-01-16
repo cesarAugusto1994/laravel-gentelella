@@ -50,7 +50,8 @@
 
                     <tbody>
                       @foreach($statuses as $status)
-                          <tr>
+                          <tr data-field="{{ $status->id }}"
+                            data-urledit="{{route('status_edit', ['id' => $status->id]) }}">
                             <td>{{$status->name}}</td>
                           </tr>
                       @endforeach
@@ -71,9 +72,56 @@
 
     <script>
 
-        $(document).ready(function(){
-          $('#datatable-buttons').DataTable();
-      });
+        $('#table').on('click-row.bs.table', function (e, value, row, index) {
+            const $id = value._data.field;
+            const url_edit = value._data.urledit;
+            const url_remove = value._data.urlremove;
+
+            const selfRow = row;
+
+            $('#btn-edit').attr('href', url_edit);
+
+            @if (Auth::user()->isAdmin())
+                $('.modal-options').modal('show');
+            @endif
+
+            $('#btn-remove').hide();
+
+            $('#btn-remove').click(function(e) {
+
+                swal({
+                    title: 'Deseja realmente Inativar?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sim'
+                    }).then((result) => {
+                    if (result.value) {
+
+                      $.post(url_remove, { id: $id, _token : "{{ csrf_token() }}" }).then((data) => {
+
+                        if (data.code > 0) {
+                          label = data.code == 200 ? 'Sucesso' : 'Erro';
+
+                          swal(
+                            label,
+                            data.message,
+                            data.class
+                          )
+                        }
+
+                      })
+
+                      selfRow.hide();
+
+                    }
+                })
+
+            });
+
+        });
 
     </script>
+
 @endpush

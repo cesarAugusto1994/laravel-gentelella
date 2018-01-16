@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Brand;
+use App\Warehouse;
 use Illuminate\Support\Facades\Validator;
 
-class BrandsController extends Controller
+class WarehousesController extends Controller
 {
 
     /**
@@ -26,7 +26,7 @@ class BrandsController extends Controller
      */
     public function index()
     {
-        return view('admin.brands.index')->with('brands', Brand::all());
+        return view('admin.warehouses.index')->with('warehouses', Warehouse::all());
     }
 
     /**
@@ -36,7 +36,7 @@ class BrandsController extends Controller
      */
     public function create()
     {
-        return view('admin.brands.create');
+        return view('admin.warehouses.create');
     }
 
     /**
@@ -47,10 +47,12 @@ class BrandsController extends Controller
      */
     public function store(Request $request)
     {
-        $name = $request->request->get('name');
+        $data = $request->request->all();
 
-        $validator = Validator::make(['name' => $name], [
-            'name' => 'required|min:2|max:255'
+        $validator = Validator::make($data, [
+            'name' => 'required|min:2|max:255|unique:warehouses',
+            'city' => 'required|min:2|max:255',
+            'state' => 'required|min:2|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -59,15 +61,9 @@ class BrandsController extends Controller
                 ->withInput();
         }
 
-        $someName = Brand::where('name', $name)->get();
+        Warehouse::create($request->request->all());
 
-        if (count($someName) > 0) {
-            return back()->withInput();
-        }
-
-        Brand::create($request->request->all());
-
-        return redirect()->route('brands');
+        return redirect()->route('warehouses');
     }
 
     /**
@@ -89,7 +85,7 @@ class BrandsController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.brands.edit')->with('brand', Brand::find($id));
+        return view('admin.warehouses.edit')->with('warehouse', Warehouse::find($id));
     }
 
     /**
@@ -101,13 +97,13 @@ class BrandsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $brand = Brand::find($id);
+        $warehouse = Warehouse::find($id);
 
-        $brand->name = $request->request->get('name');
+        $warehouse->name = $request->request->get('name');
 
-        $brand->save();
+        $warehouse->save();
 
-        return redirect()->route('brands');
+        return redirect()->route('warehouses');
     }
 
     /**
@@ -118,6 +114,22 @@ class BrandsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+
+          $warehouse = Warehouse::findOrFail($id);
+
+          $warehouse->delete();
+
+          return json_encode([
+            'message' => 'Estoque Inativado com Sucesso.',
+            'class' => 'success'
+          ], 200);
+
+        } catch(Exception $e) {
+            return json_encode([
+              'message' => $e->getMessage(),
+              'class' => 'error'
+            ]);
+        }
     }
 }

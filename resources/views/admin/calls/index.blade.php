@@ -45,12 +45,11 @@
                >
 
                     <thead>
-                      <th></th>
                       <th>Assunto</th>
                       <th>Chamado Int.</th>
                       <th>Chamado Ext.</th>
                       <th>Equipamento</th>
-                      <th>Marca</th>
+                      <th>Estoque</th>
                       <th>Modelo</th>
                       <th>N. Série</th>
                       <th>Usuário</th>
@@ -62,34 +61,31 @@
                       @foreach($calls as $call)
 
                           @if($call->user->id == Auth::user()->id || Auth::user()->isAdmin())
-                          <tr>
-                              <td>
-                                <div class="btn-group  btn-group-sm">
-                                  <a class="btn btn-xs btn-default" href="{{route('call_confirmation', ['id' => $call->id])}}">Visualizar</a>
-                                  @if($call->status == 'ABERTO' || $call->status == 'AGUARDANDO AUTORIZACAO')
-                                      <a class="btn btn-xs btn-default" class="btn btn-default" href="{{route('call_equipments_create', ['call' => $call->id])}}">Editar</a>
-                                  @endif
-                                  @if($call->status == 'AGUARDANDO AUTORIZACAO' && Auth::user()->isAdmin())
-                                      @if(!empty($call->equipment))
-                                          <a class="btn btn-xs btn-success" href="{{route('call_confirmation', ['id' => $call->id])}}">Autorizar</a>
-                                      @else
-                                          <button class="btn btn-success source" onclick="new PNotify({
-                                              title: 'Notificação',
-                                              text: 'Deve adicionar um equipamento para autorizar o chamado.',
-                                              styling: 'brighttheme'
-                                          });">Autorizar</button>
-                                      @endif
-                                  @endif
-                                  @if(($call->status == 'ABERTO' || $call->status == 'AGUARDANDO AUTORIZACAO') && !empty($call->equipment))
-                                      <a class="btn btn-xs btn-danger" href="{{route('call_cancel', ['id' => $call->id])}}">Cancelar</a>
-                                  @endif
-                                </div>
-                              </td>
+                          <tr
+                            data-urlview="{{route('call_confirmation', ['id' => $call->id])}}"
+                            @if(($call->status == App\Call::STATUS_ABERTO || $call->status == App\Call::STATUS_AGUARDANDO_AUTORIZACAO))
+                                data-urledit="{{route('call_equipments_create', ['call' => $call->id])}}"
+                            @endif
+                            @if($call->status == App\Call::STATUS_AGUARDANDO_AUTORIZACAO && Auth::user()->isAdmin() && !empty($call->equipment))
+                                data-urlauthorize="{{route('call_confirmation', ['id' => $call->id])}}"
+                            @endif
+                            @if(($call->status == App\Call::STATUS_ABERTO || $call->status == App\Call::STATUS_AGUARDANDO_AUTORIZACAO) && !empty($call->equipment))
+                                data-urlcancel="{{route('call_cancel', ['id' => $call->id])}}"
+                            @endif
+
+                            class="@if($call->status == App\Call::STATUS_AGUARDANDO_AUTORIZACAO)
+                              warning
+                            @elseif($call->status == App\Call::STATUS_AUTORIZADO)
+                              success
+                            @elseif($call->status == App\Call::STATUS_CANCELADO)
+                              danger
+                            @endif"
+                            >
                             <td>{{$call->subject->subject}}</td>
                             <td>{{$call->id}}</td>
                             <td>{{$call->external_code}}</td>
                             <td>{{ $call->equipment ? $call->equipment->name : ""}}</td>
-                            <td>{{ $call->equipment ? $call->equipment->brand->name : ""}}</td>
+                            <td>{{ $call->equipment ? $call->equipment->warehouse->name : ""}}</td>
                             <td>{{ $call->equipment ? $call->equipment->models->name : ""}}</td>
                             <td>{{ $call->equipment ? $call->equipment->serial : ""}}</td>
                             <td>{{$call->user->name}}</td>
@@ -113,11 +109,68 @@
 
 @push('scripts')
 
-    <script>
+<script>
 
-        $(document).ready(function(){
-          $('#datatable-buttons').DataTable();
-      });
+    $('#table').on('click-row.bs.table', function (e, value, row, index) {
 
-    </script>
+        const $id = value._data.field;
+
+        const $status = value._data.callstatus;
+        const url_view = value._data.urlview;
+        const url_edit = value._data.urledit;
+        const url_cancel = value._data.urlcancel;
+        const url_authorize = value._data.urlauthorize;
+
+        const selfRow = row;
+
+        $('.modal-body > p').html('');
+        $('.modal-body > p').append(value[0]);
+
+        $('#btn-view').attr('href', url_view);
+
+        $('#btn-editable').hide();
+        $('#btn-cancel').hide();
+        $('#btn-authorize').hide();
+        $('#btn-entry').hide();
+
+        if((url_edit)) {
+            $('#btn-editable').attr('href', url_edit).show();
+        }
+
+        if(url_authorize) {
+            $('#btn-authorize').attr('href', url_authorize).show();
+        }
+
+        if(url_cancel) {
+            $('#btn-cancel').attr('href', url_cancel).show();
+        }
+
+        @if (Auth::user()->isAdmin())
+            $('.modal-options-call').modal('show');
+        @endif
+
+        $('#btn-cancel').click(function(e) {
+
+            swal({
+                title: 'Deseja realmente Cancelar?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim'
+                }).then((result) => {
+                if (result.value) {
+
+                  window.location.href = url_cancel;
+
+                  selfRow.hide();
+
+                }
+            })
+
+        });
+
+    });
+
+</script>
 @endpush

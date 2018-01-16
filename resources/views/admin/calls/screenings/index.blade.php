@@ -59,7 +59,7 @@
                       <thead>
                           <th>*</th>
                           <th>Nome</th>
-                          <th>Marca</th>
+                          <th>Estoque</th>
                           <th>Modelo</th>
                           <th>Ativo</th>
                           <th>Série</th>
@@ -77,7 +77,7 @@
                               </form>
                             </td>
                             <td>{{$equipment->name}}</td>
-                            <td>{{$equipment->brand->name}}</td>
+                            <td>{{$equipment->warehouse->name}}</td>
                             <td>{{$equipment->model}}</td>
                             <td>{{$equipment->active_code}}</td>
                             <td>{{$equipment->serial}}</td>

@@ -42,12 +42,11 @@
                >
 
                     <thead>
-                      <th></th>
                       <th>Assunto</th>
                       <th>Chamado Int.</th>
                       <th>Chamado Ext.</th>
                       <th>Equipamento</th>
-                      <th>Marca</th>
+                      <th>Estoque</th>
                       <th>Modelo</th>
                       <th>N. Série</th>
                       <th>Usuário</th>
@@ -57,20 +56,16 @@
 
                     <tbody>
                       @foreach($calls as $call)
-                          <tr>
-                            <td>
-                              <div class="btn-group  btn-group-sm">
-                                <a class="btn btn-xs btn-default" href="{{route('call_confirmation', ['id' => $call->id])}}">Visualizar</a>
-                                @if($call->status == App\Call::STATUS_AUTORIZADO || $call->status == App\Call::STATUS_AGUARDANDO_AUTORIZACAO)
-                                    <a class="btn btn-xs btn-success" href="{{route('call_entry', ['id' => $call->id])}}">Iniciar Entrada</a>
-                                @endif
-                              </div>
-                            </td>
+                          <tr data-urlview="{{route('call_confirmation', ['id' => $call->id])}}"
+                            @if($call->status == App\Call::STATUS_AUTORIZADO || $call->status == App\Call::STATUS_AGUARDANDO_AUTORIZACAO)
+                                data-urlentry="{{route('call_entry', ['id' => $call->id])}}"
+                            @endif
+                            >
                             <td>{{$call->subject->subject}}</td>
                             <td>{{$call->id}}</td>
                             <td>{{$call->external_code}}</td>
                             <td>{{$call->equipment->name}}</td>
-                            <td>{{$call->equipment->brand->name}}</td>
+                            <td>{{$call->equipment->warehouse->name}}</td>
                             <td>{{$call->equipment->models->name}}</td>
                             <td>{{$call->equipment->serial}}</td>
                             <td>{{$call->user->name}}</td>
@@ -90,11 +85,59 @@
 
 @push('scripts')
 
-    <script>
 
-        $(document).ready(function(){
-          $('#datatable-buttons').DataTable();
-      });
+<script>
 
-    </script>
+    $('#table').on('click-row.bs.table', function (e, value, row, index) {
+
+        const $id = value._data.field;
+
+        const $status = value._data.callstatus;
+        const url_view = value._data.urlview;
+        const url_entry= value._data.urlentry;
+
+        const selfRow = row;
+
+        $('.modal-body > p').html('');
+        $('.modal-body > p').append(value[0]);
+
+        $('#btn-view').attr('href', url_view);
+
+        $('#btn-editable').hide();
+        $('#btn-cancel').hide();
+        $('#btn-authorize').hide();
+        $('#btn-entry').show();
+
+        if((url_entry)) {
+            $('#btn-entry').attr('href', url_entry).show();
+        }
+
+        @if (Auth::user()->isAdmin())
+            $('.modal-options-call').modal('show');
+        @endif
+
+        $('#btn-cancel').click(function(e) {
+
+            swal({
+                title: 'Deseja realmente Cancelar?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim'
+                }).then((result) => {
+                if (result.value) {
+
+                  window.location.href = url_cancel;
+
+                  selfRow.hide();
+
+                }
+            })
+
+        });
+
+    });
+
+</script>
 @endpush

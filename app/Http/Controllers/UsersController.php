@@ -118,13 +118,14 @@ class UsersController extends Controller
         $data = $request->request->all();
 
         if(!isset($data['roles'])) {
-            $data['roles'] = User::ROLE_USER;
+            $data['roles'] = self::ROLE_USER;
         }
 
         $validator = \Illuminate\Support\Facades\Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255',
             'roles' => 'required',
+            'active' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -135,6 +136,7 @@ class UsersController extends Controller
 
         $user->name = $data['name'];
         $user->email = $data['email'];
+        $user->active = $data['active'];
         $user->save();
 
         DB::table('role_user')->where('user_id', $user->id)->delete();
@@ -179,6 +181,23 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+
+          $user = User::findOrFail($id);
+          $user->active = false;
+          $user->password = Hash::make('inactive');
+          $user->save();
+
+          return json_encode([
+            'message' => 'Usuário Inativado com Sucesso.',
+            'class' => 'success'
+          ], 200);
+
+        } catch(Exception $e) {
+            return json_encode([
+              'message' => $e->getMessage(),
+              'class' => 'error'
+            ]);
+        }
     }
 }

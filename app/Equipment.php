@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Brand;
+use App\Warehouse;
 use App\Status;
 use App\Models;
 
@@ -13,23 +13,23 @@ class Equipment extends Model
     const STATUS_RESERVADO = 2;
     const STATUS_EM_USO = 3;
     const STATUS_TRIAGEM = 4;
-    const STATUS_QUEBRADO = 5;
+    const STATUS_DESCARTE = 5;
 
     protected $table = 'equipments';
 
     protected $fillable = [
         "name",
-        "brand_id",
-        "model",
+        "warehouse_id",
+        "model_id",
         "active_code",
         "serial",
         "date",
         "status_id",
     ];
 
-    public function brand()
+    public function warehouse()
     {
-        return $this->belongsTo(Brand::class);
+        return $this->belongsTo(Warehouse::class);
     }
 
     public function models()

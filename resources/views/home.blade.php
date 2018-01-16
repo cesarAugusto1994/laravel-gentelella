@@ -67,7 +67,7 @@
                               <td>
                                 <p><i class="fa fa-square green"></i><a href="{{ route('equipments', $equipment->id ) }}">{{ $equipment->name }}</a></p>
                               </td>
-                              <td>{{ $equipment->brand->name }}</td>
+                              <td>{{ $equipment->warehouse->name }}</td>
                           </tr>
 
                         @empty
@@ -102,7 +102,7 @@
                               <td>
                                 <p><i class="fa fa-square cyan"></i><a href="{{ route('equipments', $equipment->id ) }}">{{ $equipment->name }}</a></p>
                               </td>
-                              <td>{{ $equipment->brand->name }}</td>
+                              <td>{{ $equipment->warehouse->name }}</td>
                           </tr>
                         @empty
                             <tr>
@@ -158,18 +158,18 @@
                 <div class="x_content">
                   <table class="tile_info">
                     <tbody>
-                        @forelse($peddingCalls as $call)
-                              <tr>
-                                  <td>
-                                    <p><i class="fa fa-square blue"></i><a href="{{ route('equipments', $call->equipment->id ) }}">{{ $call->equipment->name }}</a></p>
-                                  </td>
-                                  <td><a href="{{ route('call', $call->id ) }}">n. {{ $call->id }}</a></td>
-                              </tr>
-                          @empty
-                              <tr>
-                                  <td>Nenhum Equipamento se encontra descartado.</td>
-                              </tr>
-                          @endforelse
+                        @forelse($descartedEquiments as $equipment)
+                          <tr>
+                              <td>
+                                <p><i class="fa fa-square cyan"></i><a href="{{ route('equipments', $equipment->id ) }}">{{ $equipment->name }}</a></p>
+                              </td>
+                              <td>{{ $equipment->warehouse->name }}</td>
+                          </tr>
+                        @empty
+                            <tr>
+                                <td>Nenhum Equipamento se encontra em triagem.</td>
+                            </tr>
+                        @endforelse
                   </tbody></table>
                 </div>
               </div>
@@ -204,7 +204,15 @@
                         </div>
                       </li>
                       @empty
-                          <li>Nenhum Log foi registrado até o momento.</li>
+                          <li>
+                            <div class="block">
+                              <div class="block_content">
+                                <h2 class="title">
+                                  <a>Nenhum Log foi registrado até o momento.</a></h2>
+
+                              </div>
+                            </div>
+                          </li>
                       @endforelse
                     </ul>
                   </div>

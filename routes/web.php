@@ -22,7 +22,7 @@ Route::prefix('user')->group(function () {
   Route::get('/call/{call}/equipments/add', 'CallEquipmentsController@add')->name('equipments_add');
 
   Route::get('/equipments', 'EquipmentsController@index')->name('equipments');
-  Route::get('/brands', 'BrandsController@index')->name('brands');
+  Route::get('/warehouses', 'WarehousesController@index')->name('warehouses');
   Route::get('/models', 'ModelsController@index')->name('models');
   Route::get('/statuses', 'StatusController@index')->name('statuses');
 
@@ -55,21 +55,27 @@ Route::prefix('admin')->group(function () {
     Route::post('/equipments/store', 'EquipmentsController@store')->name('equipments_store');
     Route::get('/equipment/{id}/edit', 'EquipmentsController@edit')->name('equipment_edit');
     Route::post('/equipment/{id}/update', 'EquipmentsController@update')->name('equipment_update');
+    Route::get('/equipment/{id}/descart', 'EquipmentsController@descart')->name('equipment_descart');
 
     Route::post('/equipment/{id}/back/stock', 'EquipmentsController@backToStock')->name('equipment_back_to_stock');
 
-    Route::get('/brands/create', 'BrandsController@create')->name('brands_create');
-    Route::post('/brands/store', 'BrandsController@store')->name('brands_store');
-    Route::get('/brand/{id}/edit', 'BrandsController@edit')->name('brands_edit');
-    Route::post('/brand/{id}/update', 'BrandsController@update')->name('brands_update');
+    Route::get('/warehouses/create', 'WarehousesController@create')->name('warehouses_create');
+    Route::post('/warehouses/store', 'WarehousesController@store')->name('warehouses_store');
+    Route::get('/warehouse/{id}/edit', 'WarehousesController@edit')->name('warehouses_edit');
+    Route::post('/warehouse/{id}/remove', 'WarehousesController@destroy')->name('warehouses_remove');
+    Route::post('/warehouse/{id}/update', 'WarehousesController@update')->name('warehouses_update');
 
     Route::get('/models/create', 'ModelsController@create')->name('models_create');
     Route::post('/model/store', 'ModelsController@store')->name('model_store');
     Route::get('/model/{id}/edit', 'ModelsController@edit')->name('models_edit');
+    Route::post('/model/{id}/remove', 'ModelsController@destroy')->name('models_remove');
     Route::post('/model/{id}/update', 'ModelsController@update')->name('models_update');
 
     Route::get('/statuses/create', 'StatusController@create')->name('status_create');
     Route::post('/statuses/store', 'StatusController@store')->name('status_store');
+    Route::get('/statuses/{id}/edit', 'StatusController@edit')->name('status_edit');
+    Route::post('/status/{id}/update', 'StatusController@update')->name('status_update');
+    Route::post('/statuses/{id}/remove', 'StatusController@destroy')->name('status_remove');
 
     Route::get('/users', 'UsersController@index')->name('users');
     Route::get('/users/create', 'UsersController@create')->name('users_create');
@@ -77,6 +83,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/user/{id}/edit', 'UsersController@edit')->name('user_edit');
     Route::post('/user/{id}/update', 'UsersController@update')->name('user_update');
     Route::post('/user/{id}/update-password', 'UsersController@updatePassword')->name('user_update_password');
+    Route::post('/user/{id}/remove', 'UsersController@destroy')->name('user_remove');
 
     Route::get('/call/subjects', 'CallSubjectsController@index')->name('subjects');
     Route::get('/call/subjects/create', 'CallSubjectsController@create')->name('subjects_create');
@@ -98,7 +105,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/reports/equipments/status/{id}', 'QueriesController@getReportFromStatus')->name('report_equipmennts_from_status');
 
     Route::get('/reports/equipments/groupingby/{group}', 'QueriesController@getReportGrouping')->name('report_equipmennts_grouping');
-    
 
-    
+
+
 });

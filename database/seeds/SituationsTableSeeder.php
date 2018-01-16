@@ -17,7 +17,7 @@ class SituationsTableSeeder extends Seeder
             "Reservado",
             "Em uso",
             "Triagem",
-            "Quebrado",
+            "Descarte",
         ];
 
         foreach($statuses as $key => $status) {
@@ -25,6 +25,6 @@ class SituationsTableSeeder extends Seeder
             $status.$key->name = $status;
             $status.$key->save();
         }
-       
+
     }
 }

@@ -66,7 +66,7 @@
                >
                       <thead>
                           <th>Nome</th>
-                          <th>Marca</th>
+                          <th>Estoque</th>
                           <th>Modelo</th>
                           <th>Ativo</th>
                           <th>Série</th>
@@ -78,7 +78,7 @@
                           @if($call->equipment)
                           <tr>
                             <td>{{$call->equipment->name}}</td>
-                            <td>{{$call->equipment->brand->name}}</td>
+                            <td>{{$call->equipment->warehouse->name}}</td>
                             <td>{{$call->equipment->model_id}}</td>
                             <td>{{$call->equipment->active_code}}</td>
                             <td>{{$call->equipment->serial}}</td>

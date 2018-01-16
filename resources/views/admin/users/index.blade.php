@@ -45,21 +45,22 @@
                >
 
                     <thead>
-                      <th>*</th>
                       <th>Nome</th>
                       <th>E-mail</th>
                       <th>Acesso</th>
+                      <th>Status</th>
                     </thead>
 
                     <tbody>
                       @foreach($users as $user)
-                          <tr>
-                            <td>
-                              <a class="btn btn-xs btn-primary" href="{{route('user_edit', ['id' => $user->id])}}"><i class="fa fa-edit"></i> Editar</a>
-                            </td>
+                          <tr data-field="{{ $user->id }}"
+                            data-urledit="{{route('user_edit', ['id' => $user->id]) }}"
+                            data-urlremove="{{route('user_remove', ['id' => $user->id]) }}"
+                            class="{{!$user->active ? 'danger' : ''}}">
                             <td>{{$user->name}}</td>
                             <td>{{$user->email}}</td>
                             <td>{{$user->roles->first()['description']}}</td>
+                            <td>{{$user->active ? 'Ativo' : 'Inativo'}}</td>
                           </tr>
                       @endforeach
                     </tbody>
@@ -77,11 +78,59 @@
 
 @push('scripts')
 
-    <script>
+<script>
 
-        $(document).ready(function(){
-          $('#datatable-buttons').DataTable();
-      });
+    $('#table').on('click-row.bs.table', function (e, value, row, index) {
+        const $id = value._data.field;
+        const url_edit = value._data.urledit;
+        const url_remove = value._data.urlremove;
 
-    </script>
+        const selfRow = row;
+
+        $('.modal-body > p').html('');
+        $('.modal-body > p').append(value[0]);
+
+        $('#btn-edit').attr('href', url_edit);
+
+        @if (Auth::user()->isAdmin())
+            $('.modal-options').modal('show');
+        @endif
+
+        $('#btn-remove').click(function(e) {
+
+            swal({
+                title: 'Deseja realmente Inativar?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim'
+                }).then((result) => {
+                if (result.value) {
+
+                  $.post(url_remove, { id: $id, _token : "{{ csrf_token() }}" }).then((data) => {
+
+                    if (data.code > 0) {
+                      label = data.code == 200 ? 'Sucesso' : 'Erro';
+
+                      swal(
+                        label,
+                        data.message,
+                        data.class
+                      )
+                    }
+
+                  })
+
+                  selfRow.hide();
+
+                }
+            })
+
+        });
+
+    });
+
+</script>
+
 @endpush

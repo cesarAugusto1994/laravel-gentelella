@@ -26,7 +26,7 @@ class StatusController extends Controller
      */
     public function index()
     {
-        return view('admin.status.index')->with('statuses', Status::all());
+        return view('admin.status.index')->with('statuses', Status::orderBy('id', 'ASC')->get());
     }
 
     /**
@@ -48,7 +48,7 @@ class StatusController extends Controller
     public function store(Request $request)
     {
         $data = $request->request->all();
-        
+
         $validator = Validator::make($data, [
             'name' => 'required|min:2|max:255'
         ]);
@@ -85,7 +85,7 @@ class StatusController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('admin.status.edit')->with('status', Status::find($id));
     }
 
     /**
@@ -97,7 +97,23 @@ class StatusController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->request->all();
+
+        $validator = Validator::make($data, [
+            'name' => 'required|min:2|max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $status = Status::find($id);
+        $status->name = $data['name'];
+        $status->save();
+
+        return redirect()->route('statuses');
     }
 
     /**

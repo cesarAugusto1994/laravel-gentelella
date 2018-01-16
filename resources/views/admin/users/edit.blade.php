@@ -52,6 +52,18 @@
                         {!! $errors->first('roles', '<p class="help-block">:message</p>') !!}
                       </div>
                     </div>
+
+                    <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Situação </label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+
+                        <select id="active" name="active" required="required" class="form-control col-md-7 col-xs-12">
+                              <option value="1" {{ $user->active ? 'selected' : '' }}>Ativo</option>
+                              <option value="0" {{ !$user->active ? 'selected' : '' }}>Inativo</option>
+                        </select>
+                        {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
+                      </div>
+                    </div>
                     @endif
 
                     <div class="ln_solid"></div>

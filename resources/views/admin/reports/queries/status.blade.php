@@ -46,7 +46,7 @@
 
                     <thead>
                       <th>Nome</th>
-                      <th>Marca</th>
+                      <th>Estoque</th>
                       <th>Modelo</th>
                       <th>Ativo</th>
                       <th>Série</th>
@@ -58,7 +58,7 @@
                       @forelse($status->equipments as $equipment)
                           <tr>
                             <td>{{$equipment->name}}</td>
-                            <td>{{$equipment->brand->name}}</td>
+                            <td>{{$equipment->warehouse->name}}</td>
                             <td>{{$equipment->models->name}}</td>
                             <td>{{$equipment->active_code}}</td>
                             <td>{{$equipment->serial}}</td>

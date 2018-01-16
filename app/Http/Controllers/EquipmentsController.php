@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Equipment;
-use App\Brand;
+use App\Warehouse;
 use App\Models;
 use Illuminate\Support\Facades\Validator;
 use App\Status;
@@ -30,10 +30,10 @@ class EquipmentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         return view('admin.equipments.index')
-        ->with('equipments', Equipment::all());
+        ->with('equipments', Equipment::where('status_id', Equipment::STATUS_DISPONIVEL)->get());
     }
 
     /**
@@ -44,7 +44,7 @@ class EquipmentsController extends Controller
     public function create()
     {
         return view('admin.equipments.create')
-        ->with('brands', Brand::all())
+        ->with('warehouses', Warehouse::all())
         ->with('models', Models::all())
         ->with('statuses', Status::all());
     }
@@ -61,7 +61,7 @@ class EquipmentsController extends Controller
 
         $validator = Validator::make($data, [
             'name' => 'required|min:2|max:255',
-            'brand' => 'required',
+            'warehouse' => 'required',
             'model' => 'required',
             'status' => 'required',
             'qtty' => 'required|min:1',
@@ -77,7 +77,7 @@ class EquipmentsController extends Controller
 
             $equipment = new Equipment();
             $equipment->name = $data['name'];
-            $equipment->brand_id = $data['brand'];
+            $equipment->warehouse_id = $data['warehouse'];
             $equipment->model_id = $data['model'];
             $equipment->active_code = $data['active'];
             $equipment->serial = $data['serial'];
@@ -135,7 +135,7 @@ class EquipmentsController extends Controller
     {
         return view('admin.equipments.edit')
         ->with('equipment', Equipment::find($id))
-        ->with('brands', Brand::all())
+        ->with('warehouses', Warehouse::all())
         ->with('models', Models::all())
         ->with('statuses', Status::all());
     }
@@ -153,9 +153,8 @@ class EquipmentsController extends Controller
 
         $validator = Validator::make($data, [
             'name' => 'required|min:2|max:255',
-            'brand' => 'required',
+            'warehouse' => 'required',
             'model' => 'required',
-            'status' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -166,15 +165,31 @@ class EquipmentsController extends Controller
 
         $equipment = Equipment::find($id);
         $equipment->name = $data['name'];
-        $equipment->brand_id = $data['brand'];
+        $equipment->warehouse_id = $data['warehouse'];
         $equipment->model_id = $data['model'];
         $equipment->active_code = $data['active'];
         $equipment->serial = $data['serial'];
-        $equipment->status_id = $data['status'];
-        $equipment->Save();
+        $equipment->save();
 
-        return redirect()->route('equipments')->with('message', 'Equipamento editado com sucesso.');
+        return redirect()->route('equipments');
+    }
 
+    public function descart($id)
+    {
+        $equipment = Equipment::find($id);
+        $equipment->status_id = Equipment::STATUS_DESCARTE;
+        $equipment->save();
+
+        return redirect()->route('equipments');
+    }
+
+    public function restore($id)
+    {
+        $equipment = Equipment::find($id);
+        $equipment->status_id = Equipment::STATUS_DISPONIVEL;
+        $equipment->save();
+
+        return redirect()->route('equipments');
     }
 
     /**

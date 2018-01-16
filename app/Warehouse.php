@@ -5,9 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Equipment;
 
-class Brand extends Model
+class Warehouse extends Model
 {
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'city', 'state'];
+
+    protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     public function equipments()
     {

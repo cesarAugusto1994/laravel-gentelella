@@ -31,16 +31,16 @@
                       </div>
                     </div>
 
-                    <div class="form-group {!! $errors->has('brand') ? 'has-error' : '' !!}">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Marca </label>
+                    <div class="form-group {!! $errors->has('warehouse') ? 'has-error' : '' !!}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Estoque </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <select class="form-control" name="brand" required>
-                          <option value="">Selecione uma Marca</option>
-                          @foreach($brands as $brand)
-                            <option value="{{$brand->id}}" {{ $equipment->brand_id == $brand->id ? 'selected' : '' }}>{{$brand->name}}</option>
+                        <select class="form-control" name="warehouse" required>
+                          <option value="">Selecione um Estoque</option>
+                          @foreach($warehouses as $warehouse)
+                            <option value="{{$warehouse->id}}" {{ $equipment->warehouse_id == $warehouse->id ? 'selected' : '' }}>{{$warehouse->name}}</option>
                           @endforeach
                         </select>
-                        {!! $errors->first('brand', '<p class="help-block">:message</p>') !!}
+                        {!! $errors->first('warehouse', '<p class="help-block">:message</p>') !!}
                       </div>
                     </div>
 
@@ -72,6 +72,7 @@
                       </div>
                     </div>
 
+                    <!--
                     <div class="form-group {!! $errors->has('status') ? 'has-error' : '' !!}">
                       <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Status </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
@@ -84,6 +85,7 @@
                         {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
                       </div>
                     </div>
+                  -->
 
                     <div class="ln_solid"></div>
                     <div class="form-group">

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Call;
 use App\Equipment;
 use App\Log;
+use Auth;
+use Redirect;
 
 class HomeController extends Controller
 {
@@ -27,10 +29,16 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+
+        if(!Auth::user()->active) {
+              Auth::logout();
+              return Redirect::route('login')->withErrors('Desculpe, mas o Usuário está desativado, entre em contato com o Administrador.');
+        }
+
         $request->user()->authorizeRoles(['user', 'admin']);
 
         $calls = Call::all();
-        $equipments = Equipment::all();
+        $equipments = Equipment::orderBy('id', 'DESC')->get();
 
         $peddingCalls = $calls->filter(function($call) {
             return $call->status == Call::STATUS_AGUARDANDO_AUTORIZACAO && !empty($call->equipment);
@@ -44,8 +52,8 @@ class HomeController extends Controller
             return $equipment->status_id == Equipment::STATUS_DISPONIVEL;
         });
 
-        $inUseEquiments = $equipments->filter(function($equipment) {
-            return $equipment->status_id == Equipment::STATUS_EM_USO;
+        $descartedEquiments = $equipments->filter(function($equipment) {
+            return $equipment->status_id == Equipment::STATUS_DESCARTE;
         });
 
         $screeningEquipments = $equipments->filter(function($equipment) {
@@ -60,7 +68,7 @@ class HomeController extends Controller
         ->with('equipments', $equipments)
         ->with('logs', $logs)
         ->with('availableEquiments', $availableEquiments)
-        ->with('inUseEquiments', $inUseEquiments)
+        ->with('descartedEquiments', $descartedEquiments)
         ->with('screeningEquipments', $screeningEquipments);
     }
 

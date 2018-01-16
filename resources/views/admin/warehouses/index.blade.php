@@ -14,14 +14,15 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2>Modelos
+                  <h2>Estoques
                     </h2>
                     @if(Auth::user()->isAdmin())
-                      <a href="{{route('models_create')}}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-plus"> </i>&nbsp;Novo Modelo</a>
+                      <a href="{{route('warehouses_create')}}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-plus"> </i>&nbsp;Novo Estoque</a>
                     @endif
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
+
 
                   <table id="table"
                       class="table table-bordered table-responsive table-hover"
@@ -45,14 +46,16 @@
 
                     <thead>
                       <th>Nome</th>
+                      <th>Cidade</th>
+                      <th>Estado</th>
                     </thead>
 
                     <tbody>
-                      @foreach($models as $model)
-                          <tr data-field="{{ $model->id }}"
-                            data-urledit="{{route('models_edit', ['id' => $model->id]) }}"
-                            data-urlremove="{{route('models_remove', ['id' => $model->id]) }}">
-                            <td>{{$model->name}}</td>
+                      @foreach($warehouses as $warehouse)
+                          <tr data-field="{{$warehouse->id}}">
+                            <td>{{$warehouse->name}}</td>
+                            <td>{{$warehouse->city}}</td>
+                            <td>{{$warehouse->state}}</td>
                           </tr>
                       @endforeach
                     </tbody>
@@ -72,23 +75,22 @@
 
   <script>
 
+      //var $id = 0;
+
       $('#table').on('click-row.bs.table', function (e, value, row, index) {
-          const $id = value._data.field;
-          const url_edit = value._data.urledit;
-          const url_remove = value._data.urlremove;
+          var $id = value._data.field;
 
           const selfRow = row;
 
-          $('.modal-body > p').html('');
-          $('.modal-body > p').append(value[0]);
-
-          $('#btn-edit').attr('href', url_edit);
+          $('#btn-edit').attr('href', '/admin/warehouse/' + $id +'/edit');
 
           @if (Auth::user()->isAdmin())
               $('.modal-options').modal('show');
           @endif
 
           $('#btn-remove').click(function(e) {
+
+              const urlAPIRemoveWarehouse = '/admin/warehouse/' + $id +'/remove';
 
               swal({
                   title: 'Deseja realmente Inativar?',
@@ -100,7 +102,7 @@
                   }).then((result) => {
                   if (result.value) {
 
-                    $.post(url_remove, { id: $id, _token : "{{ csrf_token() }}" }).then((data) => {
+                    $.post(urlAPIRemoveWarehouse, { id: $id, _token : "{{ csrf_token() }}" }).then((data) => {
 
                       if (data.code > 0) {
                         label = data.code == 200 ? 'Sucesso' : 'Erro';
@@ -122,6 +124,8 @@
           });
 
       });
+
+
 
   </script>
 

@@ -100,7 +100,7 @@
 									<a href="?filter={{$filter}}&add-equipment={{$equipment->id}}" class="btn btn-success btn-xs btn-default">Adicionar</a>
 								</td>
 								<td>{{$equipment->name}}</td>
-								<td>{{$equipment->brand->name}}</td>
+								<td>{{$equipment->warehouse->name}}</td>
 								<td>{{$equipment->model}}</td>
 								<td>{{$equipment->active_code}}</td>
 								<td>{{$equipment->serial}}</td>

@@ -63,7 +63,7 @@
 											<a href="?remove-equipment={{$call->equipment->id}}" class="btn btn-danger btn-xs btn-default">Remover</a>
 										</td>
 										<td>{{$call->equipment->name}}</td>
-										<td>{{$call->equipment->brand->name}}</td>
+										<td>{{$call->equipment->warehouse->name}}</td>
 										<td>{{$call->equipment->models->name}}</td>
 										<td>{{$call->equipment->active_code}}</td>
 										<td>{{$call->equipment->serial}}</td>
