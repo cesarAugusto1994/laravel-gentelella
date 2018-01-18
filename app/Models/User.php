@@ -11,7 +11,7 @@ class User extends Authenticatable
 {
 	use Notifiable;
 	use HasRoles;
-	
+
     /**
      * The attributes that are mass assignable.
      *
@@ -41,10 +41,10 @@ class User extends Authenticatable
     public function authorizeRoles($roles)
     {
         if (is_array($roles)) {
-            return $this->hasAnyRole($roles) || 
+            return $this->hasAnyRole($roles) ||
                     abort(401, 'This action is unauthorized.');
     }
-        return $this->hasRole($roles) || 
+        return $this->hasRole($roles) ||
             abort(401, 'This action is unauthorized.');
     }
     /**
@@ -64,7 +64,8 @@ class User extends Authenticatable
         return null !== $this->roles()->where("name", $role)->first();
     }
 
-    public function isAdmin() {
-        return $this->hasRole('Admin'); // ?? something like this! should return true or false
+    public function isAdmin()
+		{
+        return $this->hasRole('Admin');
     }
 }
