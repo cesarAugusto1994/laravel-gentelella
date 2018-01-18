@@ -145,9 +145,7 @@
             $('#btn-cancel').attr('href', url_cancel).show();
         }
 
-        @if (Auth::user()->isAdmin())
-            $('.modal-options-call').modal('show');
-        @endif
+        $('.modal-options-call').modal('show');
 
         $('#btn-cancel').click(function(e) {
 
